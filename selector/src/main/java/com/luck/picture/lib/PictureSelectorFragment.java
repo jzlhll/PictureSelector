@@ -324,7 +324,8 @@ public class PictureSelectorFragment extends PictureCommonFragment
     private void initComplete() {
         if (selectorConfig.selectionMode == SelectModeConfig.SINGLE && selectorConfig.isDirectReturnSingle) {
             selectorConfig.selectorStyle.getTitleBarStyle().setHideCancelButton(false);
-            titleBar.getTitleCancelView().setVisibility(View.VISIBLE);
+            //allan modify这里不合理，会让preview也显示delete
+            //titleBar.getTitleCancelView().setVisibility(View.VISIBLE);
             completeSelectView.setVisibility(View.GONE);
         } else {
             completeSelectView.setCompleteSelectViewStyle();
