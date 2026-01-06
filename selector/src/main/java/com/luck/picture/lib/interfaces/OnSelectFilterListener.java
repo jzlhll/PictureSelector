@@ -2,6 +2,8 @@ package com.luck.picture.lib.interfaces;
 
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.util.List;
+
 /**
  * @author：luck
  * @date：2022/3/12 9:00 下午
@@ -15,4 +17,6 @@ public interface OnSelectFilterListener {
      * @return the boolean result
      */
     boolean onSelectFilter(LocalMedia media);
+
+    boolean onSelectFilter(List<LocalMedia> mediaList);
 }

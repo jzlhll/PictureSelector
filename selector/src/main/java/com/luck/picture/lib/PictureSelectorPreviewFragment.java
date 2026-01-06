@@ -231,7 +231,8 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
     }
 
     @Override
-    public void onSelectedChange(boolean isAddRemove, LocalMedia currentMedia) {
+    public void onSelectedChange(boolean isAddRemove, List<LocalMedia> currentMediaList) {
+        var currentMedia = currentMediaList.get(0); //later: 只有当preview有的时候，才会有，这个时候的操作都是单操作。暂时保持这样。
         // 更新TitleBar和BottomNarBar选择态
         tvSelected.setSelected(selectorConfig.getSelectedResult().contains(currentMedia));
         bottomNarBar.setSelectedChange();

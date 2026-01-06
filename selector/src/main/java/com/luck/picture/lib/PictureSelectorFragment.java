@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -143,20 +141,26 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onSelectedChange(boolean isAddRemove, LocalMedia currentMedia) {
+    public void onSelectedChange(boolean isAddRemove, List<LocalMedia> selectMediaList) { //allan feature select All
+        if (selectMediaList == null || selectMediaList.isEmpty()) {
+            throw new RuntimeException("Please select at least one picture");
+        }
+
         bottomNarBar.setSelectedChange();
+        titleBar.setSelectedChange(); //allan added
+
         completeSelectView.setSelectedChange(false);
         // 刷新列表数据
-        if (checkNotifyStrategy(isAddRemove)) {
-            mAdapter.notifyItemPositionChanged(currentMedia.position);
-            mRecycler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
-                }
+        var isMulti = selectMediaList.size() > 1;
+        var isNotifyAll = isMulti || checkNotifyStrategy(isAddRemove);
+
+        if (isNotifyAll) {
+            mRecycler.postDelayed(() -> {
+                mAdapter.notifyDataSetChanged();
             }, SELECT_ANIM_DURATION);
         } else {
-            mAdapter.notifyItemPositionChanged(currentMedia.position);
+            //单个1.
+            mAdapter.notifyItemPositionChanged(selectMediaList.get(0).position);
         }
         if (!isAddRemove) {
             sendChangeSubSelectPositionEvent(true);
@@ -260,6 +264,24 @@ public class PictureSelectorFragment extends PictureCommonFragment
             recoverSaveInstanceData();
         } else {
             requestLoadData();
+        }
+		//allan feature select All
+        initSelectAllBars();
+    }
+
+    private void initSelectAllBars() {
+        if (selectorConfig.maxSelectNum == Integer.MAX_VALUE) {
+            titleBar.setOnSelectAllListener(new TitleBar.OnSelectAllListener() {
+                @Override
+                public void onSelectAll() {
+                    confirmSelectAlbumAllAdd(mAdapter.getData());
+                }
+
+                @Override
+                public void onCancelSelectAll() {
+                    confirmSelectRemoveAll();
+                }
+            });
         }
     }
 
@@ -457,6 +479,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
                 selectorConfig.currentLocalMediaFolder = firstFolder;
             }
             titleBar.setTitle(firstFolder.getFolderName());
+            titleBar.resetToNoneSelect("recover");//allan feature select All
             albumListPopWindow.bindAlbumData(albumData);
             if (selectorConfig.isPageStrategy) {
                 handleFirstPageMedia(new ArrayList<>(selectorConfig.dataSource), true);
@@ -562,6 +585,13 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
             @Override
             public void onItemClick(int position, LocalMediaFolder curFolder) {
+                //allan feature select All 如果是全选模式则移除选中的内容，不做跨相册的选择
+                if (selectorConfig.maxSelectNum == Integer.MAX_VALUE) {
+                    confirmSelectRemoveAll();
+                    titleBar.resetToNoneSelect("pop select list");
+                }
+                ////allan feature select All end
+
                 isDisplayCamera = selectorConfig.isDisplayCamera && curFolder.getBucketId() == PictureConfig.ALL;
                 mAdapter.setDisplayCamera(isDisplayCamera);
                 titleBar.setTitle(curFolder.getFolderName());
@@ -708,6 +738,8 @@ public class PictureSelectorFragment extends PictureCommonFragment
                 }
             }
             titleBar.setTitle(firstFolder.getFolderName());
+            titleBar.resetToNoneSelect("just load");//allan feature select All
+
             albumListPopWindow.bindAlbumData(result);
             if (selectorConfig.isPageStrategy) {
                 if (selectorConfig.isPreloadFirst) {

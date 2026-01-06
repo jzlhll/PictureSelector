@@ -8,6 +8,8 @@ import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectLimitType;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.util.List;
+
 /**
  * @author：luck
  * @date：2022/1/8 2:12 下午
@@ -24,4 +26,6 @@ public interface OnSelectLimitTipsListener {
      * Otherwise, use the system default prompt
      */
     boolean onSelectLimitTips(Context context, @Nullable LocalMedia media, SelectorConfig config, int limitType);
+
+    boolean onSelectListLimitTips(Context context, @Nullable List<LocalMedia> mediaList, SelectorConfig config, int limitType);
 }

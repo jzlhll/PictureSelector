@@ -67,6 +67,7 @@ import com.luck.picture.lib.style.SelectMainStyle;
 import com.luck.picture.lib.thread.PictureThreadUtils;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
 import com.luck.picture.lib.utils.BitmapUtils;
+import com.luck.picture.lib.utils.CollectionUtils;
 import com.luck.picture.lib.utils.DateUtils;
 import com.luck.picture.lib.utils.FileDirMap;
 import com.luck.picture.lib.utils.MediaStoreUtils;
@@ -187,8 +188,7 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
 
 
     @Override
-    public void onSelectedChange(boolean isAddRemove, LocalMedia currentMedia) {
-
+    public void onSelectedChange(boolean isAddRemove, List<LocalMedia> selectMediaList) {
     }
 
     @Override
@@ -435,6 +435,54 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
         return resultCode;
     }
 
+    @Override
+    public int confirmSelectAlbumAllAdd(List<LocalMedia> mediaList) {
+        if (selectorConfig.onSelectFilterListener != null) {
+            if (selectorConfig.onSelectFilterListener.onSelectFilter(mediaList)) {
+                boolean isSelectLimit = false;
+                if (selectorConfig.onSelectLimitTipsListener != null) {
+                    isSelectLimit = selectorConfig.onSelectLimitTipsListener
+                            .onSelectListLimitTips(getAppContext(), mediaList, selectorConfig, SelectLimitType.SELECT_NOT_SUPPORT_SELECT_LIMIT);
+                }
+                if (isSelectLimit) {
+                } else {
+                    ToastUtils.showToast(getAppContext(), getString(R.string.ps_select_no_support));
+                }
+                return SelectedManager.INVALID;
+            }
+        }
+        int checkSelectValidity = isCheckSelectValidity(mediaList, false);
+        if (checkSelectValidity != SelectedManager.SUCCESS) {
+            return SelectedManager.INVALID;
+        }
+        List<LocalMedia> selectedResult = selectorConfig.getSelectedResult();
+        int resultCode;
+        for (int i = 0; i < mediaList.size(); i++) {
+            var currentMedia = mediaList.get(i);
+            selectedResult.add(currentMedia);
+            currentMedia.setNum(selectedResult.size());
+        }
+        resultCode = SelectedManager.ADD_SUCCESS;
+        playClickEffect();
+
+        sendSelectedChangeEvent(true, mediaList);
+        return resultCode;
+    }
+
+    @Override
+    public int confirmSelectRemoveAll() {
+        var count = selectorConfig.getSelectedResult().size();
+        int resultCode = SelectedManager.REMOVE;
+        if (count == 0) {
+            return resultCode;
+        }
+        var backupList = new ArrayList<>(selectorConfig.getSelectedResult());
+        List<LocalMedia> selectedResult = selectorConfig.getSelectedResult();
+        selectedResult.clear();
+        sendSelectedChangeEvent(false, backupList);
+        return resultCode;
+    }
+
     /**
      * 验证选择的合法性
      *
@@ -462,6 +510,16 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
         } else {
             // 单一型模式
             if (checkOnlyMimeTypeValidity(currentMedia,isSelected, curMimeType, selectorConfig.getResultFirstMimeType(), curFileSize, curDuration)) {
+                return SelectedManager.INVALID;
+            }
+        }
+        return SelectedManager.SUCCESS;
+    }
+
+    protected int isCheckSelectValidity(List<LocalMedia> currentMediaList, boolean isSelected) {
+        for (int i = 0; i < currentMediaList.size(); i++) {
+            LocalMedia media = currentMediaList.get(i);
+            if (isCheckSelectValidity(media, isSelected) != SelectedManager.SUCCESS) {
                 return SelectedManager.INVALID;
             }
         }
@@ -773,16 +831,21 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
     }
 
     @Override
-    public void sendSelectedChangeEvent(boolean isAddRemove, LocalMedia currentMedia) {
+    public void sendSelectedChangeEvent(boolean isAddRemove, List<LocalMedia> currentMediaList) {
         if (!ActivityCompatHelper.isDestroy(getActivity())) {
             List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
             for (int i = 0; i < fragments.size(); i++) {
                 Fragment fragment = fragments.get(i);
                 if (fragment instanceof PictureCommonFragment) {
-                    ((PictureCommonFragment) fragment).onSelectedChange(isAddRemove, currentMedia);
+                    ((PictureCommonFragment) fragment).onSelectedChange(isAddRemove, currentMediaList);
                 }
             }
         }
+    }
+
+    @Override
+    public void sendSelectedChangeEvent(boolean isAddRemove, LocalMedia currentMedia) {
+        sendSelectedChangeEvent(isAddRemove, CollectionUtils.asList(currentMedia));
     }
 
     @Override

@@ -476,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                                 .setVideoPlayerEngine(videoPlayerEngine)
                                 .setCropEngine(getCropFileEngine())
                                 .setCompressEngine(getCompressFileEngine())
-                                .setSandboxFileEngine(new MeSandboxFileEngine())
+                                //.setSandboxFileEngine(new MeSandboxFileEngine())
                                 .setCameraInterceptListener(getCustomCameraEvent())
                                 .setRecordAudioInterceptListener(new MeOnRecordAudioInterceptListener())
                                 .setSelectLimitTipsListener(new MeOnSelectLimitTipsListener())
@@ -550,12 +550,23 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                                 //.setQueryOnlyMimeType(PictureMimeType.ofGIF())
                                 .isMaxSelectEnabledMask(cbEnabledMask.isChecked())
                                 .isDirectReturnSingle(cb_single_back.isChecked())
-                                .setMaxSelectNum(maxSelectNum)
+                                .setMaxSelectNum(Integer.MAX_VALUE)
                                 .setMaxVideoSelectNum(maxSelectVideoNum)
                                 .setRecyclerAnimationMode(animationMode)
                                 .isGif(cb_isGif.isChecked())
                                 .setSelectedData(mAdapter.getData());
-                        forSelectResult(selectionModel);
+                        selectionModel.forResult(new OnResultCallbackListener<LocalMedia>() {
+                            @Override
+                            public void onResult(ArrayList<LocalMedia> result) {
+                                Log.d(TAG, "onResult: result " + result.size());
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+                        //forSelectResult(selectionModel);
                     }
                 } else {
                     // 单独拍照
@@ -1305,6 +1316,21 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
      * 拦截自定义提示
      */
     private static class MeOnSelectLimitTipsListener implements OnSelectLimitTipsListener {
+
+        @Override
+        public boolean onSelectListLimitTips(Context context, @Nullable List<LocalMedia> mediaList, SelectorConfig config, int limitType) {
+            if (limitType == SelectLimitType.SELECT_MIN_SELECT_LIMIT) {
+                ToastUtils.showToast(context, "图片最少不能低于" + config.minSelectNum + "张");
+                return true;
+            } else if (limitType == SelectLimitType.SELECT_MIN_VIDEO_SELECT_LIMIT) {
+                ToastUtils.showToast(context, "视频最少不能低于" + config.minVideoSelectNum + "个");
+                return true;
+            } else if (limitType == SelectLimitType.SELECT_MIN_AUDIO_SELECT_LIMIT) {
+                ToastUtils.showToast(context, "音频最少不能低于" + config.minAudioSelectNum + "个");
+                return true;
+            }
+            return false;
+        }
 
         @Override
         public boolean onSelectLimitTips(Context context, @Nullable LocalMedia media, SelectorConfig config, int limitType) {

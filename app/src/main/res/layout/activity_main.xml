@@ -588,7 +588,7 @@
                     android:id="@+id/cbPage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="分页模式"
                     android:textColor="@color/app_color_53575e"
                     android:textSize="14sp" />

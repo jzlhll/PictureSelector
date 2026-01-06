@@ -8,6 +8,7 @@ import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author：luck
@@ -100,6 +101,17 @@ public interface IPictureSelectorCommonEvent {
     int confirmSelect(LocalMedia currentMedia, boolean isSelected);
 
     /**
+     * 多选模式下的confirmSelect的新增List版本
+     *
+     */
+    int confirmSelectAlbumAllAdd(List<LocalMedia> mediaList);
+    /**
+     * 多选模式下的confirmSelect的移除版本
+     *
+     */
+    int confirmSelectRemoveAll();
+
+    /**
      * 验证共选类型模式可选条件
      *
      * @param media           选中对象
@@ -127,11 +139,11 @@ public interface IPictureSelectorCommonEvent {
 
     /**
      * 选择结果数据发生改变
-     *
+     * allan modify修改成List处理
      * @param isAddRemove  isAddRemove  添加还是移除操作
-     * @param currentMedia 当前操作的对象
+     * @param currentMediaList 当前操作的对象
      */
-    void onSelectedChange(boolean isAddRemove, LocalMedia currentMedia);
+    void onSelectedChange(boolean isAddRemove, List<LocalMedia> currentMediaList);
 
     /**
      * 刷新指定数据
@@ -153,6 +165,8 @@ public interface IPictureSelectorCommonEvent {
      * @param currentMedia 当前操作的对象
      */
     void sendSelectedChangeEvent(boolean isAddRemove, LocalMedia currentMedia);
+
+    void sendSelectedChangeEvent(boolean isAddRemove, List<LocalMedia> currentMediaList);
 
     /**
      * 刷新指定数据
