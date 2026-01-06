@@ -3,6 +3,7 @@ package com.luck.picture.lib.widget;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.luck.picture.lib.PictureSelectorFragment;
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.config.SelectorConfig;
@@ -39,6 +42,68 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     protected SelectorConfig config;
     protected View viewTopStatusBar;
     protected RelativeLayout titleBarLayout;
+
+    private ImageView selectAllImage;
+
+    private int mCurrentNum = 0;
+
+    private boolean mIsAllSelected = false;
+
+    private OnSelectAllListener mOnSelectAllListener;
+
+    /**
+     * 不论哪个被调用，你需要调用[setCurrentNum]来刷新最新状态。
+     */
+    public interface OnSelectAllListener {
+        void onSelectAll();
+        void onCancelSelectAll();
+    }
+
+    /**
+     * 设置了这个全选，就激活了全选模式，取消了cancel按钮。
+     */
+    public void setOnSelectAllListener(@NonNull OnSelectAllListener listener) {
+        mOnSelectAllListener = listener;
+        selectAllImage = findViewById(R.id.ps_select_all);
+        selectAllImage.setVisibility(View.VISIBLE);
+        selectAllImage.setOnClickListener((OnClickListener) v -> {
+            if (mIsAllSelected) {
+                mOnSelectAllListener.onCancelSelectAll();
+            } else {
+                mOnSelectAllListener.onSelectAll();
+            }
+        });
+
+        tvCancel.setOnClickListener(null);
+        tvCancel.setVisibility(View.GONE);
+    }
+
+    public void resetToNoneSelect(String from) {
+        if (mOnSelectAllListener == null) {
+            return;
+        }
+        mIsAllSelected = false;
+//            selectAllImage.contentDescription = context.getString(R.string.select_all)
+        selectAllImage.setImageResource(R.drawable.ps_select_all);
+        Log.d(PictureSelectorFragment.TAG, "allan💗 " + from + "reset to None Select");
+    }
+
+    public void setSelectedChange() {
+        if (mOnSelectAllListener == null) {
+            return;
+        }
+        var selectCount = config.getSelectCount();
+        Log.d(PictureSelectorFragment.TAG, "allan💗 set Selected Change " + selectCount);
+        mCurrentNum = selectCount;
+        if (mIsAllSelected) {
+            mIsAllSelected = false;
+//            selectAllImage.contentDescription = context.getString(R.string.select_all)
+            selectAllImage.setImageResource(R.drawable.ps_select_all);
+        } else {
+            mIsAllSelected = true;
+            selectAllImage.setImageResource(R.drawable.ps_select_cancel);
+        }
+    }
 
     public TextView getTitleCancelView() {
         return tvCancel;
@@ -188,7 +253,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             rlAlbumBg.setBackgroundResource(albumBackgroundRes);
         }
 
-        if (titleBarStyle.isHideCancelButton()) {
+        if (titleBarStyle.isHideCancelButton() || mOnSelectAllListener != null) {
             tvCancel.setVisibility(GONE);
         } else {
             tvCancel.setVisibility(VISIBLE);
