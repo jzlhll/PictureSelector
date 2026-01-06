@@ -1,4 +1,5 @@
 > fork from https://github.com/buhuiming/PictureSelector
+> 
 > fork from https://github.com/LuckSiege/PictureSelector
 
 # PictureSelector
@@ -57,5 +58,20 @@ Google又加强了一把，弄了一个选择图册的时候，弹出一个先�
 原项目`LuckSiege/PictureSelector` 最后的版本`v3.11.2 `定格在：Dec 17, 2023。
 好在对于android14的细分权限也已经支持。没有对于android15的沉浸式加强。
 
-xxx
+`buhuiming/PictureSelector` 进行了fork主要修正android15的沉浸式。
+
+现在对于非普通应用，使用`ActivityResultContract` + `PickVisualMediaRequest`，又简单又轻松，而且重要的是，你的应用压根不需要任何权限。
+
+我也fork了这个项目，做了修改：
+https://github.com/jzlhll/PictureSelector.git
+当设置了：
+```java
+//不要设置该参数
+//.setSandboxFileEngine(new MeSandboxFileEngine())
+
+//设置maxSelectNum为int最大值
+.setMaxSelectNum(Integer.MAX_VALUE)
+```
+右上角就有全选模式和取消全选功能。
+用于做一些相册导入导出的全选操作。
 
