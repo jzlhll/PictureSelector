@@ -3,6 +3,29 @@
 > fork from https://github.com/LuckSiege/PictureSelector
 
 # PictureSelector
+
+```groovy
+repositories {
+  google()
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+dependencies {
+  // PictureSelector basic (Necessary) 我只修改了该模块，其他暂时不编译，不影响
+  implementation 'io.github.jzlhll-pictureselector-3.16.0'
+
+  // image compress library (Not necessary)
+  implementation 'com.github.buhuiming.PictureSelector:compress:3.15.1'
+
+  // uCrop library (Not necessary)
+  implementation 'com.github.buhuiming.PictureSelector:ucrop:3.15.1'
+
+  // simple camerax library (Not necessary)
+  implementation 'com.github.buhuiming.PictureSelector:camerax:3.15.1'
+}
+```
+
+
 ## 背景
 android的图片选择器的发展故事是这样的：
 
