@@ -11,6 +11,7 @@
         android:background="@drawable/ps_num_oval"
         android:gravity="center"
         android:textColor="@color/ps_color_white"
+        android:paddingHorizontal="2dp"
         android:textSize="11sp"
         android:visibility="gone" />
 
