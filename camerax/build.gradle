@@ -33,16 +33,6 @@ android {
     }
 }
 
-ext {
-    PUBLISH_ARTIFACT_ID = "camerax"
-}
-
-ext.GROUP = "com.github.buhuiming"
-ext.POM_ARTIFACT_ID = "camerax"
-ext.VERSION_NAME = "3.15.1"
-//引用gradle_upload.gradle
-apply from: "${project.rootDir}/publish.gradle"
-
 dependencies {
     implementation 'androidx.core:core-ktx:1.13.1'
     def camerax_version = "1.2.1"

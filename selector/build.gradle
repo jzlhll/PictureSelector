@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'maven-publish'
+    id("com.vanniktech.maven.publish") version "0.35.0"
 }
 
 android {
@@ -37,16 +38,6 @@ android {
     }
 }
 
-ext {
-    PUBLISH_ARTIFACT_ID = "PictureSelector"
-}
-
-ext.GROUP = "com.github.buhuiming"
-ext.POM_ARTIFACT_ID = "PictureSelector"
-ext.VERSION_NAME = "3.15.1"
-//引用gradle_upload.gradle
-apply from: "${project.rootDir}/publish.gradle"
-
 dependencies {
     implementation "androidx.appcompat:appcompat:${cfgs.version_appcompat}"
     implementation "androidx.recyclerview:recyclerview:${cfgs.version_recyclerview}"
@@ -57,4 +48,39 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${cfgs.constraintlayout}"
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.activity:activity-ktx:1.10.1'
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+}
+
+mavenPublishing {
+    coordinates("io.github.jzlhll", "pictureselector", "3.16.0")
+
+    pom {
+        name = "pictureselector"
+        description = "This is my android project picture selector."
+        inceptionYear = "2026"
+        url = "https://github.com/jzlhll/AndroidCompontsV2"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "jzlhll"
+                name = "jzlhll"
+                url = "https://github.com/jzlhll/"
+            }
+        }
+        scm {
+            url = "https://github.com/jzlhll/PictureSelector"
+            connection = "scm:git:git://github.com/jzlhll/PictureSelector.git"
+            developerConnection = "scm:git:ssh://git@github.com/jzlhll/PictureSelector.git"
+        }
+    }
 }
