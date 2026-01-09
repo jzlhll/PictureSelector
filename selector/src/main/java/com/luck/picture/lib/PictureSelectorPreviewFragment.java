@@ -294,32 +294,7 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
                 navigationBarColor = ContextCompat.getColor(requireContext(), R.color.ps_color_grey);
             }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            navBarView = new View(requireContext());
-            navBarView.setId(R.id.ps_nav_bar_id);
-            rootView.addView(navBarView);
-            ViewGroup.LayoutParams layoutParams = navBarView.getLayoutParams();
-            if (layoutParams instanceof ConstraintLayout.LayoutParams) {
-                ConstraintLayout.LayoutParams params1 = (ConstraintLayout.LayoutParams) layoutParams;
-                params1.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-                params1.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                params1.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-                params1.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
-                params1.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-                ((ConstraintLayout.LayoutParams) bottomNarBar.getLayoutParams()).bottomToTop = R.id.ps_nav_bar_id;
-            }
-            navBarView.setBackgroundColor(navigationBarColor);
-            navBarView.setVisibility(View.VISIBLE);
-            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-                Insets navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
-                navBarView.getLayoutParams().height = navBars.bottom;
-                return insets;
-            });
-            // 主动请求 Insets 分发，防止没有触发
-            ViewCompat.requestApplyInsets(rootView);
-        } else {
-            requireActivity().getWindow().setNavigationBarColor(navigationBarColor);
-        }
+        requireActivity().getWindow().setNavigationBarColor(navigationBarColor);
     }
 
     @Override

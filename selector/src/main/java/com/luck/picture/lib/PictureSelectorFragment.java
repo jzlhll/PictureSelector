@@ -259,7 +259,6 @@ public class PictureSelectorFragment extends PictureCommonFragment
         initComplete();
         initRecycler(view);
         initBottomNavBar();
-        immersiveAboveAPI35((ViewGroup) view);
         if (isMemoryRecycling) {
             recoverSaveInstanceData();
         } else {
@@ -282,43 +281,6 @@ public class PictureSelectorFragment extends PictureCommonFragment
                     confirmSelectRemoveAll();
                 }
             });
-        }
-    }
-
-    private void immersiveAboveAPI35(ViewGroup rootView) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            View navBarView = new View(requireContext());
-            navBarView.setId(R.id.ps_nav_bar_id);
-            rootView.addView(navBarView);
-            ViewGroup.LayoutParams layoutParams = navBarView.getLayoutParams();
-            if (layoutParams instanceof ConstraintLayout.LayoutParams) {
-                ConstraintLayout.LayoutParams params1 = (ConstraintLayout.LayoutParams) layoutParams;
-                params1.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-                params1.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                params1.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-                params1.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
-                params1.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-                ((ConstraintLayout.LayoutParams) bottomNarBar.getLayoutParams()).bottomToTop = R.id.ps_nav_bar_id;
-            }
-            SelectMainStyle mainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-            int navigationBarColor = mainStyle.getNavigationBarColor();
-            int bottomBarBackgroundColor = selectorConfig.selectorStyle.getBottomBarStyle().getBottomNarBarBackgroundColor();
-            if (!StyleUtils.checkStyleValidity(navigationBarColor)) {
-                if (StyleUtils.checkStyleValidity(bottomBarBackgroundColor)) {
-                    navigationBarColor = bottomBarBackgroundColor;
-                } else {
-                    navigationBarColor = ContextCompat.getColor(requireContext(), R.color.ps_color_grey);
-                }
-            }
-            navBarView.setBackgroundColor(navigationBarColor);
-            navBarView.setVisibility(View.VISIBLE);
-            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-                Insets navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
-                navBarView.getLayoutParams().height = navBars.bottom;
-                return insets;
-            });
-            // 主动请求 Insets 分发，防止没有触发
-            ViewCompat.requestApplyInsets(rootView);
         }
     }
 
