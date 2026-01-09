@@ -9,13 +9,13 @@ https://github.com/jzlhll/PictureSelector
 
 ```groovy
 repositories {
-  google()
+    //...
   mavenCentral()
-  maven { url 'https://jitpack.io' }
 }
+
 dependencies {
   // PictureSelector basic (Necessary) 我只修改了该模块，其他暂时不编译，不影响
-  implementation 'io.github.jzlhll-pictureselector-3.16.0'
+  implementation 'io.github.jzlhll:pictureselector:3.16.2'
 
   // image compress library (Not necessary)
   implementation 'com.github.buhuiming.PictureSelector:compress:3.15.1'
