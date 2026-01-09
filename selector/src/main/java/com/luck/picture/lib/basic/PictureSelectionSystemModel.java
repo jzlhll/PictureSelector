@@ -50,8 +50,7 @@ public final class PictureSelectionSystemModel {
 
     public PictureSelectionSystemModel(PictureSelector selector, int chooseMode) {
         this.selector = selector;
-        selectionConfig = new SelectorConfig();
-        SelectorProviders.getInstance().addSelectorConfigQueue(selectionConfig);
+        selectionConfig = SelectorProviders.getInstance().getSelectorConfigReset();
         selectionConfig.chooseMode = chooseMode;
         selectionConfig.isPreviewFullScreenMode = false;
         selectionConfig.isPreviewZoomEffect = false;

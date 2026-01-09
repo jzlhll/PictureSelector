@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                                 .setImageEngine(imageEngine)
                                 .setVideoPlayerEngine(videoPlayerEngine)
                                 .setCropEngine(getCropFileEngine())
-                                .setCompressEngine(getCompressFileEngine())
+                                //.setCompressEngine(getCompressFileEngine())
                                 //.setSandboxFileEngine(new MeSandboxFileEngine())
                                 .setCameraInterceptListener(getCustomCameraEvent())
                                 .setRecordAudioInterceptListener(new MeOnRecordAudioInterceptListener())

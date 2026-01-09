@@ -146,7 +146,7 @@ public final class SelectorConfig {
     public boolean isNewKeyBackMode;
     public PictureSelectorStyle selectorStyle;
 
-    public SelectorConfig() {
+    SelectorConfig() {
         initDefaultValue();
     }
 

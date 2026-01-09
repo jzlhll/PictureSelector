@@ -1,6 +1,12 @@
 package com.luck.picture.lib.config;
 
+import android.util.Log;
+
+import com.luck.picture.lib.PictureSelectorFragment;
+
 import java.util.LinkedList;
+
+import kotlin.jvm.Volatile;
 
 /**
  * @author：luck
@@ -9,32 +15,30 @@ import java.util.LinkedList;
  */
 public class SelectorProviders {
 
-    private final LinkedList<SelectorConfig> selectionConfigsQueue = new LinkedList<>();
+    @Volatile
+    private SelectorConfig selectorConfig;
 
-    public void addSelectorConfigQueue(SelectorConfig config) {
-        selectionConfigsQueue.add(config);
+    public SelectorConfig getSelectorConfigReset() {
+        destroy();
+        selectorConfig = new SelectorConfig();
+        return selectorConfig;
     }
 
     public SelectorConfig getSelectorConfig() {
-        return selectionConfigsQueue.size() > 0 ? selectionConfigsQueue.getLast() : new SelectorConfig();
+        var config = selectorConfig;
+        if (config == null) {
+            config = new SelectorConfig();
+            selectorConfig = config;
+        }
+        return config;
     }
 
     public void destroy() {
-        SelectorConfig selectorConfig = getSelectorConfig();
-        if (selectorConfig != null) {
-            selectorConfig.destroy();
-            selectionConfigsQueue.remove(selectorConfig);
+        var config = selectorConfig;
+        if (config != null) {
+            config.destroy();
         }
-    }
-
-    public void reset() {
-        for (int i = 0; i < selectionConfigsQueue.size(); i++) {
-            SelectorConfig selectorConfig = selectionConfigsQueue.get(i);
-            if (selectorConfig != null) {
-                selectorConfig.destroy();
-            }
-        }
-        selectionConfigsQueue.clear();
+        selectorConfig = null;
     }
 
     private static volatile SelectorProviders selectorProviders;

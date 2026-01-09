@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -354,6 +355,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
                 throw new NullPointerException("No available " + IBridgeMediaLoader.class + " loader found");
             }
         } else {
+            Log.d(TAG, "create Local Media Loader isPageStrategy " + selectorConfig.isPageStrategy);
             mLoader = selectorConfig.isPageStrategy
                     ? new LocalMediaPageLoader(getAppContext(), selectorConfig)
                     : new LocalMediaLoader(getAppContext(), selectorConfig);

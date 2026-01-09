@@ -28,34 +28,48 @@ dependencies {
 }
 ```
 
-现在对于非普通应用，使用`ActivityResultContract` + `PickVisualMediaRequest`，又简单又轻松，
-而且重要的是，你的应用压根不需要任何权限就能选择到图片和视频。
-唯一的缺点就是上限100个文件。~可能主要的原因是跨进程Intent的binder上限1MB-8k原因。~
+现在对于非普通应用强烈推荐：
+- 选择图片和视频：使用`ActivityResultContract` + `PickVisualMediaRequest`，又简单又轻松，
+而且更重要的是，你的应用压根不需要申请任何权限。要知道，管理细分三个权限，和用户选择区域权限，以及android12的write storage权限真的很烦。
+  - 唯一缺点就是上限100个文件。主要原因可能是跨进程Intent的binder上限1MB-8k。
 
-对于audio，可以通过`ActivityResultContracts.GetMultipleContents()`来选择。
-
+- 选择audio：通过`ActivityResultContracts.GetMultipleContents()`来实现。
 
 所以我为什么要clone这个项目？
 
 ## 我做了什么修改
 ### 全选功能
-当设置了：
-```java
-//不要设置该参数
-//.setSandboxFileEngine(new MeSandboxFileEngine())
+~原项目没有这个功能，已经没有存在的必要。~
 
-//设置maxSelectNum为int最大值
+**这也是android发展到现在，PictureSelector库存在的唯一意义。用于相册类应用和系统程序集成。**
+
+当设置参数：
+```java
+//一定不要设置该参数，目的是为了拷贝到本地目录
+//.setSandboxFileEngine(new MeSandboxFileEngine())
+//也不建议设置该参数，目的是为了进行压缩
+//.setCompressEngine(getCompressFileEngine())
+
+//设置maxSelectNum为int最大值，切换成全选模式
 .setMaxSelectNum(Integer.MAX_VALUE)
 ```
 右上角就有全选模式和取消全选功能，用于做大批量相册导入导出的全选操作。
-**这也是android发展到现在，PictureSelector存在的唯一意义。 **
 
 ### 资源方式导致显示问题修正
 constraintLayout内部一堆wrap高度加相互约束，高度等参数又是动态设定，导致无法正确显示。
 
-### TODO简化沉浸式和主题
-现在这里面的沉浸式代码太多太乱了，仍然navigationBar和constaintLayout导致显示问题。我计划尝试简化。
-我会简化沉浸式和移除主题，不允许定制主题了。主题定制应该以resource overlay（人话：主模块覆盖子模块）的方式自动实现，而不是通过代码传递参数来修改。
+### TODO 简化沉浸式和主题
+
+我开发的原则是，遵循最简化开发。
+不应该给开发者提供过多选择。虽然定制化强大，但是开源库需要维护的东西过于庞大，尤其是对于UIStyle而言。
+
+目前有2个问题：
+1. 沉浸式
+   这里面的沉浸式代码太多太乱了，而且仍然存在navigationBar和constraintLayout等导致显示黑屏。我计划简化，使用edgeToEdge来实现，对于preview的时候做适配动态显示systemBars即可。
+
+2. Style
+   我会完全移除主题定制相关的API。
+   库的使用者以resource overlay（人话：主模块覆盖子模块）的方式自动实现，而不是通过代码传递参数来修改。压根不需要原来的inject layout的方式。
 
 ## 背景
 android的图片选择器的发展故事是这样的：

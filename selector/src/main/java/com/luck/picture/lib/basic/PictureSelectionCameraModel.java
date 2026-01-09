@@ -53,8 +53,7 @@ public final class PictureSelectionCameraModel {
 
     public PictureSelectionCameraModel(PictureSelector selector, int chooseMode) {
         this.selector = selector;
-        selectionConfig = new SelectorConfig();
-        SelectorProviders.getInstance().addSelectorConfigQueue(selectionConfig);
+        selectionConfig = SelectorProviders.getInstance().getSelectorConfigReset();
         selectionConfig.chooseMode = chooseMode;
         selectionConfig.isOnlyCamera = true;
         selectionConfig.isDisplayTimeAxis = false;
@@ -371,6 +370,9 @@ public final class PictureSelectionCameraModel {
      */
     private PictureSelectionCameraModel setMaxSelectNum(int maxSelectNum) {
         selectionConfig.maxSelectNum = selectionConfig.selectionMode == SelectModeConfig.SINGLE ? 1 : maxSelectNum;
+        if (maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+        }
         return this;
     }
 

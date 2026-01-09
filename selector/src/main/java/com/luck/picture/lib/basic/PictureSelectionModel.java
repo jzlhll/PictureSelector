@@ -73,8 +73,7 @@ public final class PictureSelectionModel {
 
     public PictureSelectionModel(PictureSelector selector, int chooseMode) {
         this.selector = selector;
-        selectionConfig = new SelectorConfig();
-        SelectorProviders.getInstance().addSelectorConfigQueue(selectionConfig);
+        selectionConfig = SelectorProviders.getInstance().getSelectorConfigReset();
         selectionConfig.chooseMode = chooseMode;
         setMaxVideoSelectNum(selectionConfig.maxVideoSelectNum);
     }
@@ -610,7 +609,12 @@ public final class PictureSelectionModel {
      *
      */
     public PictureSelectionModel setMaxSelectNum(int maxSelectNum) {
-        selectionConfig.maxSelectNum = selectionConfig.selectionMode == SelectModeConfig.SINGLE ? 1 : maxSelectNum;
+        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+            selectionConfig.selectionMode = SelectModeConfig.MULTIPLE;
+        } else {
+            selectionConfig.maxSelectNum = selectionConfig.selectionMode == SelectModeConfig.SINGLE ? 1 : maxSelectNum;
+        }
         return this;
     }
 
@@ -659,6 +663,9 @@ public final class PictureSelectionModel {
      */
     public PictureSelectionModel isPageStrategy(boolean isPageStrategy) {
         selectionConfig.isPageStrategy = isPageStrategy;
+        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+        }
         return this;
     }
 
@@ -671,38 +678,10 @@ public final class PictureSelectionModel {
      */
     public PictureSelectionModel isPageStrategy(boolean isPageStrategy, int pageSize) {
         selectionConfig.isPageStrategy = isPageStrategy;
+        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+        }
         selectionConfig.pageSize = pageSize < PictureConfig.MIN_PAGE_SIZE ? PictureConfig.MAX_PAGE_SIZE : pageSize;
-        return this;
-    }
-
-
-    /**
-     * Whether to turn on paging mode
-     *
-     * @param isPageStrategy
-     * @param isFilterInvalidFile Whether to filter invalid files {@link Some of the query performance is consumed,Especially on the Q version}
-     *
-     */
-    @Deprecated
-    public PictureSelectionModel isPageStrategy(boolean isPageStrategy, boolean isFilterInvalidFile) {
-        selectionConfig.isPageStrategy = isPageStrategy;
-        selectionConfig.isFilterInvalidFile = isFilterInvalidFile;
-        return this;
-    }
-
-    /**
-     * Whether to turn on paging mode
-     *
-     * @param isPageStrategy
-     * @param pageSize            Maximum number of pages {@link  PageSize is preferably no less than 20}
-     * @param isFilterInvalidFile Whether to filter invalid files {@link Some of the query performance is consumed,Especially on the Q version}
-     *
-     */
-    @Deprecated
-    public PictureSelectionModel isPageStrategy(boolean isPageStrategy, int pageSize, boolean isFilterInvalidFile) {
-        selectionConfig.isPageStrategy = isPageStrategy;
-        selectionConfig.pageSize = pageSize < PictureConfig.MIN_PAGE_SIZE ? PictureConfig.MAX_PAGE_SIZE : pageSize;
-        selectionConfig.isFilterInvalidFile = isFilterInvalidFile;
         return this;
     }
 

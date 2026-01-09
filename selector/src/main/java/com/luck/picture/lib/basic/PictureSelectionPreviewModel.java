@@ -44,11 +44,9 @@ public final class PictureSelectionPreviewModel {
 
     public PictureSelectionPreviewModel(PictureSelector selector) {
         this.selector = selector;
-        selectionConfig = new SelectorConfig();
-        SelectorProviders.getInstance().addSelectorConfigQueue(selectionConfig);
+        selectionConfig = SelectorProviders.getInstance().getSelectorConfigReset();
         selectionConfig.isPreviewZoomEffect = false;
     }
-
 
     /**
      * Image Load the engine

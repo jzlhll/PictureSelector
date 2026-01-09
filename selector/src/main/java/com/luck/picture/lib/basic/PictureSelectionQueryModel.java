@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.luck.picture.lib.config.FileSizeUnit;
 import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.SelectModeConfig;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -32,8 +33,7 @@ public class PictureSelectionQueryModel {
 
     public PictureSelectionQueryModel(PictureSelector selector, int selectMimeType) {
         this.selector = selector;
-        selectionConfig = new SelectorConfig();
-        SelectorProviders.getInstance().addSelectorConfigQueue(selectionConfig);
+        selectionConfig = SelectorProviders.getInstance().getSelectorConfigReset();
         selectionConfig.chooseMode = selectMimeType;
     }
 
@@ -45,6 +45,10 @@ public class PictureSelectionQueryModel {
      */
     public PictureSelectionQueryModel isPageStrategy(boolean isPageStrategy) {
         selectionConfig.isPageStrategy = isPageStrategy;
+        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+            selectionConfig.selectionMode = SelectModeConfig.MULTIPLE;
+        }
         return this;
     }
 
@@ -57,6 +61,10 @@ public class PictureSelectionQueryModel {
      */
     public PictureSelectionQueryModel isPageStrategy(boolean isPageStrategy, int pageSize) {
         selectionConfig.isPageStrategy = isPageStrategy;
+        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+            selectionConfig.selectionMode = SelectModeConfig.MULTIPLE;
+        }
         selectionConfig.pageSize = pageSize < PictureConfig.MIN_PAGE_SIZE ? PictureConfig.MAX_PAGE_SIZE : pageSize;
         return this;
     }
@@ -72,6 +80,10 @@ public class PictureSelectionQueryModel {
     public PictureSelectionQueryModel isPageStrategy(boolean isPageStrategy, int pageSize, boolean isFilterInvalidFile) {
         selectionConfig.isPageStrategy = isPageStrategy;
         selectionConfig.pageSize = pageSize < PictureConfig.MIN_PAGE_SIZE ? PictureConfig.MAX_PAGE_SIZE : pageSize;
+        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.isPageStrategy = false;
+            selectionConfig.selectionMode = SelectModeConfig.MULTIPLE;
+        }
         selectionConfig.isFilterInvalidFile = isFilterInvalidFile;
         return this;
     }
