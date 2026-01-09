@@ -609,7 +609,8 @@ public final class PictureSelectionModel {
      *
      */
     public PictureSelectionModel setMaxSelectNum(int maxSelectNum) {
-        if (selectionConfig.maxSelectNum == Integer.MAX_VALUE) {
+        if (maxSelectNum == Integer.MAX_VALUE) {
+            selectionConfig.maxSelectNum = maxSelectNum;
             selectionConfig.isPageStrategy = false;
             selectionConfig.selectionMode = SelectModeConfig.MULTIPLE;
         } else {
