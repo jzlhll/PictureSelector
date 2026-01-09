@@ -1,6 +1,9 @@
 > fork from https://github.com/buhuiming/PictureSelector
 > 
 > fork from https://github.com/LuckSiege/PictureSelector
+>
+我现在也fork了项目，做了修改：
+https://github.com/jzlhll/PictureSelector
 
 # PictureSelector
 
@@ -25,6 +28,34 @@ dependencies {
 }
 ```
 
+现在对于非普通应用，使用`ActivityResultContract` + `PickVisualMediaRequest`，又简单又轻松，
+而且重要的是，你的应用压根不需要任何权限就能选择到图片和视频。
+唯一的缺点就是上限100个文件。~可能主要的原因是跨进程Intent的binder上限1MB-8k原因。~
+
+对于audio，可以通过`ActivityResultContracts.GetMultipleContents()`来选择。
+
+
+所以我为什么要clone这个项目？
+
+## 我做了什么修改
+### 全选功能
+当设置了：
+```java
+//不要设置该参数
+//.setSandboxFileEngine(new MeSandboxFileEngine())
+
+//设置maxSelectNum为int最大值
+.setMaxSelectNum(Integer.MAX_VALUE)
+```
+右上角就有全选模式和取消全选功能，用于做大批量相册导入导出的全选操作。
+**这也是android发展到现在，PictureSelector存在的唯一意义。 **
+
+### 资源方式导致显示问题修正
+constraintLayout内部一堆wrap高度加相互约束，高度等参数又是动态设定，导致无法正确显示。
+
+### TODO简化沉浸式和主题
+现在这里面的沉浸式代码太多太乱了，仍然navigationBar和constaintLayout导致显示问题。我计划尝试简化。
+我会简化沉浸式和移除主题，不允许定制主题了。主题定制应该以resource overlay（人话：主模块覆盖子模块）的方式自动实现，而不是通过代码传递参数来修改。
 
 ## 背景
 android的图片选择器的发展故事是这样的：
@@ -85,16 +116,4 @@ Google又加强了一把，弄了一个选择图册的时候，弹出一个先�
 
 现在对于非普通应用，使用`ActivityResultContract` + `PickVisualMediaRequest`，又简单又轻松，而且重要的是，你的应用压根不需要任何权限。
 
-我也fork了这个项目，做了修改：
-https://github.com/jzlhll/PictureSelector.git
-当设置了：
-```java
-//不要设置该参数
-//.setSandboxFileEngine(new MeSandboxFileEngine())
-
-//设置maxSelectNum为int最大值
-.setMaxSelectNum(Integer.MAX_VALUE)
-```
-右上角就有全选模式和取消全选功能。
-用于做一些相册导入导出的全选操作。
 

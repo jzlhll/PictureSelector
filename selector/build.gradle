@@ -56,7 +56,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-    coordinates("io.github.jzlhll", "pictureselector", "3.16.0")
+    coordinates("io.github.jzlhll", "pictureselector", "3.16.1")
 
     pom {
         name = "pictureselector"
