@@ -1475,5 +1475,17 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         super.onDestroy();
     }
 
-
+    @Override
+    protected void onBackCurrentFragment() {
+        if (selectorConfig.isPreviewFullScreenMode) {
+            if (SdkVersionUtils.isP() && isAdded()) {
+                Window window = requireActivity().getWindow();
+                WindowManager.LayoutParams lp = window.getAttributes();
+                lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                window.setAttributes(lp);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            }
+        }
+        super.onBackCurrentFragment();
+    }
 }
