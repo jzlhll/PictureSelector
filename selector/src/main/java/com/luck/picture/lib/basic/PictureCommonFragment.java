@@ -46,7 +46,6 @@ import com.luck.picture.lib.dialog.PictureLoadingDialog;
 import com.luck.picture.lib.dialog.RemindDialog;
 import com.luck.picture.lib.engine.PictureSelectorEngine;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.immersive.ImmersiveManager;
 import com.luck.picture.lib.interfaces.OnCallbackIndexListener;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.interfaces.OnItemClickListener;
@@ -63,7 +62,6 @@ import com.luck.picture.lib.permissions.PermissionResultCallback;
 import com.luck.picture.lib.permissions.PermissionUtil;
 import com.luck.picture.lib.service.ForegroundService;
 import com.luck.picture.lib.style.PictureWindowAnimationStyle;
-import com.luck.picture.lib.style.SelectMainStyle;
 import com.luck.picture.lib.thread.PictureThreadUtils;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
 import com.luck.picture.lib.utils.BitmapUtils;
@@ -304,22 +302,10 @@ public abstract class PictureCommonFragment extends Fragment implements IPicture
             mLoadingDialog = new PictureLoadingDialog(getAppContext());
         }
         setRequestedOrientation();
-        setTranslucentStatusBar();
         setRootViewKeyListener(requireView());
         if (selectorConfig.isOpenClickSound && !selectorConfig.isOnlyCamera) {
             soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             soundID = soundPool.load(getAppContext(), R.raw.ps_click_music, 1);
-        }
-    }
-
-
-    /**
-     * 设置透明状态栏
-     */
-    private void setTranslucentStatusBar() {
-        if (selectorConfig.isPreviewFullScreenMode) {
-            SelectMainStyle selectMainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-            ImmersiveManager.translucentStatusBar(requireActivity(), selectMainStyle.isDarkStatusBarBlack());
         }
     }
 

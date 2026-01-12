@@ -1,63 +1,52 @@
 package com.luck.picture.lib.basic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
 
 import com.luck.picture.lib.PictureSelectorFragment;
 import com.luck.picture.lib.R;
+import com.luck.picture.lib.bases.AbsImmersiveActivity;
+import com.luck.picture.lib.bases.UtilKt;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
-import com.luck.picture.lib.immersive.ImmersiveManager;
 import com.luck.picture.lib.language.LanguageConfig;
 import com.luck.picture.lib.language.PictureLanguageUtils;
 import com.luck.picture.lib.style.PictureWindowAnimationStyle;
-import com.luck.picture.lib.style.SelectMainStyle;
-import com.luck.picture.lib.utils.StyleUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-/**
- * @author：luck
- * @date：2021/11/17 9:59 上午
- * @describe：PictureSelectorSupporterActivity
- */
-public class PictureSelectorSupporterActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+
+public class PictureSelectorSupporterActivity extends AbsImmersiveActivity {
     private SelectorConfig selectorConfig;
 
     @Override
+    public int getEnterAnim() {
+        PictureWindowAnimationStyle windowAnimationStyle = selectorConfig.selectorStyle.getWindowAnimationStyle();
+        return windowAnimationStyle.activityEnterAnimation;
+    }
+
+    @Override
+    public int getExitAnim() {
+        PictureWindowAnimationStyle windowAnimationStyle = selectorConfig.selectorStyle.getWindowAnimationStyle();
+        return windowAnimationStyle.activityExitAnimation;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         initSelectorConfig();
-        immersive();
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.ps_activity_container);
         setupFragment();
     }
 
     private void initSelectorConfig() {
         selectorConfig = SelectorProviders.getInstance().getSelectorConfig();
-    }
-
-    private void immersive() {
-        SelectMainStyle mainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-        int statusBarColor = mainStyle.getStatusBarColor();
-        int navigationBarColor = mainStyle.getNavigationBarColor();
-        boolean isDarkStatusBarBlack = mainStyle.isDarkStatusBarBlack();
-        int bottomBarBackgroundColor = selectorConfig.selectorStyle.getBottomBarStyle().getBottomNarBarBackgroundColor();
-        if (!StyleUtils.checkStyleValidity(statusBarColor)) {
-            statusBarColor = ContextCompat.getColor(this, R.color.ps_color_grey);
-        }
-        if (!StyleUtils.checkStyleValidity(navigationBarColor)) {
-            if (StyleUtils.checkStyleValidity(bottomBarBackgroundColor)) {
-                navigationBarColor = bottomBarBackgroundColor;
-            } else {
-                navigationBarColor = ContextCompat.getColor(this, R.color.ps_color_grey);
-            }
-        }
-        ImmersiveManager.immersiveAboveAPI23(this, statusBarColor, navigationBarColor, isDarkStatusBarBlack);
     }
 
     private void setupFragment() {
@@ -91,11 +80,6 @@ public class PictureSelectorSupporterActivity extends AppCompatActivity {
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        if (selectorConfig != null) {
-            PictureWindowAnimationStyle windowAnimationStyle = selectorConfig.selectorStyle.getWindowAnimationStyle();
-            overridePendingTransition(0, windowAnimationStyle.activityExitAnimation);
-        }
+    public void immersive(@NotNull Activity activity, @NotNull View root, int statusBarHeight, int navBarHeight) {
     }
 }

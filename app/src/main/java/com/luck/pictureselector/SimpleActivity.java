@@ -1,29 +1,23 @@
 package com.luck.pictureselector;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.luck.picture.lib.immersive.ImmersiveManager;
+import com.luck.picture.lib.bases.AbsImmersiveActivity;
+import com.luck.picture.lib.bases.UtilKt;
 
-import androidx.appcompat.app.AppCompatActivity;
+import org.jetbrains.annotations.NotNull;
 
-public class SimpleActivity extends AppCompatActivity implements View.OnClickListener {
+public class SimpleActivity extends AbsImmersiveActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
-        ImmersiveManager.immersiveAboveAPI35(
-                this,
-                findViewById(R.id.rootView),
-                Color.WHITE,
-                Color.WHITE,
-                true
-        );
-
 
         Button btn_activity = findViewById(R.id.btn_activity);
         Button btn_inject_fragment = findViewById(R.id.btn_inject_fragment);
@@ -42,5 +36,20 @@ public class SimpleActivity extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.btn_only_query_data){
             startActivity(new Intent(SimpleActivity.this, OnlyQueryDataActivity.class));
         }
+    }
+
+    @Override
+    public int getEnterAnim() {
+        return 0;
+    }
+
+    @Override
+    public int getExitAnim() {
+        return 0;
+    }
+
+    @Override
+    public void immersive(@NotNull Activity activity, @NotNull View root, int statusBarHeight, int navBarHeight) {
+        UtilKt.setTopAndBottomPadding(findViewById(R.id.rootView), statusBarHeight, navBarHeight);
     }
 }

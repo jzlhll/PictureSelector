@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.RequiresApi;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
 import com.luck.picture.lib.utils.DensityUtil;
@@ -133,11 +134,7 @@ public class MagicalView extends FrameLayout {
      */
     private void getScreenSize() {
         screenWidth = DensityUtil.getRealScreenWidth(getContext());
-        if (isPreviewFullScreenMode) {
-            screenHeight = DensityUtil.getRealScreenHeight(getContext());
-        } else {
-            screenHeight = DensityUtil.getScreenHeight(getContext());
-        }
+        screenHeight = ScreenConst.instance.screenHeight;
     }
 
     /**

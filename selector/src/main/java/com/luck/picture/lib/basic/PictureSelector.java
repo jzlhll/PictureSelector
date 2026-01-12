@@ -1,14 +1,12 @@
 package com.luck.picture.lib.basic;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -32,41 +30,22 @@ public final class PictureSelector {
     }
 
     private PictureSelector(Fragment fragment) {
-        this(fragment.getActivity(), fragment);
+        this(fragment.requireActivity(), fragment);
     }
 
     private PictureSelector(Activity activity, Fragment fragment) {
+        ScreenConst.instance.sure(activity);
         mActivity = new SoftReference<>(activity);
         mFragment = new SoftReference<>(fragment);
     }
 
     /**
-     * Start PictureSelector for context.
-     *
-     * @param context
-     * @return PictureSelector instance.
-     */
-    public static PictureSelector create(Context context) {
-        return new PictureSelector((Activity) context);
-    }
-
-    /**
      * Start PictureSelector for Activity.
      *
      * @param activity
      * @return PictureSelector instance.
      */
-    public static PictureSelector create(AppCompatActivity activity) {
-        return new PictureSelector(activity);
-    }
-
-    /**
-     * Start PictureSelector for Activity.
-     *
-     * @param activity
-     * @return PictureSelector instance.
-     */
-    public static PictureSelector create(FragmentActivity activity) {
+    public static PictureSelector create(Activity activity) {
         return new PictureSelector(activity);
     }
 

@@ -30,6 +30,7 @@ import com.luck.picture.lib.adapter.PictureImageGridAdapter;
 import com.luck.picture.lib.animators.AlphaInAnimationAdapter;
 import com.luck.picture.lib.animators.AnimationType;
 import com.luck.picture.lib.animators.SlideInBottomAnimationAdapter;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.basic.FragmentInjectManager;
 import com.luck.picture.lib.basic.IPictureSelectorEvent;
 import com.luck.picture.lib.basic.PictureCommonFragment;
@@ -324,12 +325,12 @@ public class PictureSelectorFragment extends PictureCommonFragment
                             completeSelectView.getLayoutParams()).bottomToBottom = R.id.title_bar;
                     if (selectorConfig.isPreviewFullScreenMode) {
                         ((ConstraintLayout.LayoutParams) completeSelectView
-                                .getLayoutParams()).topMargin = DensityUtil.getStatusBarHeight(getContext());
+                                .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
                     }
                 } else if (completeSelectView.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
                     if (selectorConfig.isPreviewFullScreenMode) {
                         ((RelativeLayout.LayoutParams) completeSelectView
-                                .getLayoutParams()).topMargin = DensityUtil.getStatusBarHeight(getContext());
+                                .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
                     }
                 }
             }
@@ -1036,7 +1037,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
             }
             if (!isBottomPreview && selectorConfig.isPreviewZoomEffect) {
                 BuildRecycleItemViewParams.generateViewParams(mRecycler,
-                        selectorConfig.isPreviewFullScreenMode ? 0 : DensityUtil.getStatusBarHeight(getContext()));
+                        selectorConfig.isPreviewFullScreenMode ? 0 : ScreenConst.instance.statusBarHeight);
             }
             if (selectorConfig.onPreviewInterceptListener != null) {
                 selectorConfig.onPreviewInterceptListener

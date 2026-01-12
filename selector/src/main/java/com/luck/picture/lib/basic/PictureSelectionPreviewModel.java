@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.luck.picture.lib.PictureSelectorPreviewFragment;
 import com.luck.picture.lib.R;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.config.SelectorConfig;
@@ -208,7 +209,7 @@ public final class PictureSelectionPreviewModel {
                 if (isFullScreenModel) {
                     BuildRecycleItemViewParams.generateViewParams(listView, 0);
                 } else {
-                    BuildRecycleItemViewParams.generateViewParams(listView, DensityUtil.getStatusBarHeight(selector.getActivity()));
+                    BuildRecycleItemViewParams.generateViewParams(listView, ScreenConst.instance.statusBarHeight);
                 }
             }
             selectionConfig.isPreviewZoomEffect = isPreviewZoomEffect;

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.adapter.PictureAlbumAdapter;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.decoration.WrapContentLinearLayoutManager;
@@ -54,7 +55,7 @@ public class AlbumListPopWindow extends PopupWindow {
     }
 
     private void initViews() {
-        windowMaxHeight = (int) (DensityUtil.getScreenHeight(mContext) * 0.6);
+        windowMaxHeight = (int) (ScreenConst.instance.screenHeight * 0.6);
         mRecyclerView = getContentView().findViewById(R.id.folder_list);
         windMask = getContentView().findViewById(R.id.rootViewBg);
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(mContext));

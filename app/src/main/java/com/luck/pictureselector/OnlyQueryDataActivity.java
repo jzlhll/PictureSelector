@@ -18,13 +18,13 @@ import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.decoration.GridSpacingItemDecoration;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.entity.LocalMediaFolder;
-import com.luck.picture.lib.immersive.ImmersiveManager;
 import com.luck.picture.lib.interfaces.OnQueryAllAlbumListener;
 import com.luck.picture.lib.interfaces.OnQueryDataSourceListener;
 import com.luck.picture.lib.loader.IBridgeMediaLoader;
 import com.luck.picture.lib.utils.DateUtils;
 import com.luck.picture.lib.utils.DensityUtil;
 import com.luck.picture.lib.widget.RecyclerPreloadView;
+import com.yalantis.ucrop.statusbar.ImmersiveManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +50,9 @@ public class OnlyQueryDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_only_query_data);
         int color = ContextCompat.getColor(this, R.color.app_color_white);
-        ImmersiveManager.immersiveAboveAPI23(this, color, color, true);
-        ImmersiveManager.setDarkStatusBarIcon(this, true);
-        ImmersiveManager.statusBarAndNavigationBarPadding(findViewById(R.id.recycler));
+//        ImmersiveManager.immersiveAboveAPI23(this, color, color, true);
+//        ImmersiveManager.setDarkStatusBarIcon(this, true);
+//        ImmersiveManager.statusBarAndNavigationBarPadding(findViewById(R.id.recycler));
         RecyclerPreloadView mRecycler = findViewById(R.id.recycler);
         mRecycler.addItemDecoration(new GridSpacingItemDecoration(4,
                 DensityUtil.dip2px(this, 1), false));
@@ -80,7 +80,7 @@ public class OnlyQueryDataActivity extends AppCompatActivity {
         findViewById(R.id.tv_build_loader).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IBridgeMediaLoader loader = PictureSelector.create(v.getContext())
+                IBridgeMediaLoader loader = PictureSelector.create(OnlyQueryDataActivity.this)
                         .dataSource(SelectMimeType.ofImage()).buildMediaLoader();
                 loader.loadAllAlbum(new OnQueryAllAlbumListener<LocalMediaFolder>() {
                     @Override

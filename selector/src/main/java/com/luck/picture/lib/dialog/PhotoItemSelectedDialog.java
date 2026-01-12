@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.luck.picture.lib.R;
-import com.luck.picture.lib.immersive.ImmersiveManager;
+import com.luck.picture.lib.bases.UtilKt;
 import com.luck.picture.lib.interfaces.OnItemClickListener;
 import com.luck.picture.lib.utils.DensityUtil;
 
@@ -63,9 +63,9 @@ public class PhotoItemSelectedDialog extends DialogFragment implements View.OnCl
         tvPictureVideo.setOnClickListener(this);
         tvPicturePhoto.setOnClickListener(this);
         tvPictureCancel.setOnClickListener(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            ImmersiveManager.navigationBarPadding(view);
-        }
+
+        //todo check
+        UtilKt.plusNavPadding(view);
         view.setClipToOutline(true);
         view.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
     }

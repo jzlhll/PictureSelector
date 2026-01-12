@@ -30,6 +30,7 @@ import com.luck.picture.lib.adapter.PicturePreviewAdapter;
 import com.luck.picture.lib.adapter.holder.BasePreviewHolder;
 import com.luck.picture.lib.adapter.holder.PreviewGalleryAdapter;
 import com.luck.picture.lib.adapter.holder.PreviewVideoHolder;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.basic.PictureCommonFragment;
 import com.luck.picture.lib.basic.PictureMediaScannerConnection;
 import com.luck.picture.lib.config.Crop;
@@ -143,8 +144,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
 
     protected int totalNum;
 
-    protected int screenWidth, screenHeight;
-
     protected long mBucketId = -1;
 
     protected TextView tvSelected;
@@ -252,8 +251,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         super.onViewCreated(view, savedInstanceState);
         reStartSavedInstance(savedInstanceState);
         isSaveInstanceState = savedInstanceState != null;
-        screenWidth = DensityUtil.getRealScreenWidth(getContext());
-        screenHeight = DensityUtil.getScreenHeight(getContext());
         titleBar = view.findViewById(R.id.title_bar);
         tvSelected = view.findViewById(R.id.ps_tv_selected);
         tvSelectedWord = view.findViewById(R.id.ps_tv_selected_word);
@@ -706,12 +703,12 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
                         .getLayoutParams()).bottomToBottom = R.id.title_bar;
                 if (selectorConfig.isPreviewFullScreenMode) {
                     ((ConstraintLayout.LayoutParams) completeSelectView
-                            .getLayoutParams()).topMargin = DensityUtil.getStatusBarHeight(getContext());
+                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
                 }
             } else if (completeSelectView.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
                 if (selectorConfig.isPreviewFullScreenMode) {
                     ((RelativeLayout.LayoutParams) completeSelectView
-                            .getLayoutParams()).topMargin = DensityUtil.getStatusBarHeight(getContext());
+                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
                 }
             }
         }
@@ -737,10 +734,10 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
             if (selectorConfig.isPreviewFullScreenMode) {
                 if (tvSelectedWord.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
                     ((ConstraintLayout.LayoutParams) tvSelectedWord
-                            .getLayoutParams()).topMargin = DensityUtil.getStatusBarHeight(getContext());
+                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
                 } else if (tvSelectedWord.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
                     ((RelativeLayout.LayoutParams) tvSelectedWord
-                            .getLayoutParams()).topMargin = DensityUtil.getStatusBarHeight(getContext());
+                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
                 }
             }
         }
@@ -1478,7 +1475,7 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             if (mData.size() > position) {
-                LocalMedia currentMedia = positionOffsetPixels < screenWidth / 2 ? mData.get(position) : mData.get(position + 1);
+                LocalMedia currentMedia = positionOffsetPixels < ScreenConst.instance.screenWidth / 2 ? mData.get(position) : mData.get(position + 1);
                 tvSelected.setSelected(isSelected(currentMedia));
                 notifyGallerySelectMedia(currentMedia);
                 notifySelectNumberStyle(currentMedia);
@@ -1589,8 +1586,8 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         int realHeight;
         boolean isReturnNow = true;
         if (MediaUtils.isLongImage(media.getWidth(), media.getHeight())) {
-            realWidth = screenWidth;
-            realHeight = screenHeight;
+            realWidth = ScreenConst.instance.screenWidth;
+            realHeight = ScreenConst.instance.screenHeight;
         } else {
             realWidth = media.getWidth();
             realHeight = media.getHeight();

@@ -46,6 +46,9 @@ import com.luck.lib.camerax.listener.OnSimpleXPermissionDescriptionListener;
 import com.luck.lib.camerax.permissions.SimpleXPermissionUtil;
 import com.luck.picture.lib.PictureSelectorPreviewFragment;
 import com.luck.picture.lib.animators.AnimationType;
+import com.luck.picture.lib.bases.AbsImmersiveActivity;
+import com.luck.picture.lib.bases.ScreenConst;
+import com.luck.picture.lib.bases.UtilKt;
 import com.luck.picture.lib.basic.FragmentInjectManager;
 import com.luck.picture.lib.basic.IBridgePictureBehavior;
 import com.luck.picture.lib.basic.IBridgeViewLifecycle;
@@ -74,7 +77,6 @@ import com.luck.picture.lib.engine.VideoPlayerEngine;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.entity.LocalMediaFolder;
 import com.luck.picture.lib.entity.MediaExtraInfo;
-import com.luck.picture.lib.immersive.ImmersiveManager;
 import com.luck.picture.lib.interfaces.OnBitmapWatermarkEventListener;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.interfaces.OnCameraInterceptListener;
@@ -124,6 +126,7 @@ import com.luck.pictureselector.listener.OnItemLongClickListener;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropImageEngine;
 import com.yalantis.ucrop.model.AspectRatio;
+import com.yalantis.ucrop.statusbar.ImmersiveManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -164,7 +167,7 @@ import top.zibin.luban.OnRenameListener;
  * @描述: Demo
  */
 
-public class MainActivity extends AppCompatActivity implements IBridgePictureBehavior, View.OnClickListener,
+public class MainActivity extends AbsImmersiveActivity implements IBridgePictureBehavior, View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
     private final static String TAG = "PictureSelectorTag";
     private final static String TAG_EXPLAIN_VIEW = "TAG_EXPLAIN_VIEW";
@@ -210,11 +213,6 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ImmersiveManager.setDecorFitsSystemWindows(this, false, false);
-        ImmersiveManager.navigationBarPadding(findViewById(R.id.rootView));
-        ViewGroup.LayoutParams params = findViewById(R.id.barView).getLayoutParams();
-        params.height = DensityUtil.getStatusBarHeight();
 
         selectorStyle = new PictureSelectorStyle();
         ImageView minus = findViewById(R.id.minus);
@@ -453,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                 if (mode) {
                     // 进入系统相册
                     if (cb_system_album.isChecked()) {
-                        PictureSelectionSystemModel systemGalleryMode = PictureSelector.create(getContext())
+                        PictureSelectionSystemModel systemGalleryMode = PictureSelector.create(MainActivity.this)
                                 .openSystemGallery(chooseMode)
                                 .setSelectionMode(cb_choose_mode.isChecked() ? SelectModeConfig.MULTIPLE : SelectModeConfig.SINGLE)
                                 .setCompressEngine(getCompressFileEngine())
@@ -469,7 +467,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
                         forSystemResult(systemGalleryMode);
                     } else {
                         // 进入相册
-                        PictureSelectionModel selectionModel = PictureSelector.create(getContext())
+                        PictureSelectionModel selectionModel = PictureSelector.create(MainActivity.this)
                                 .openGallery(chooseMode)
                                 .setSelectorUIStyle(selectorStyle)
                                 .setImageEngine(imageEngine)
@@ -852,6 +850,16 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
         mDragListener.dragState(false);
     }
 
+    @Override
+    public int getEnterAnim() {
+        return 0;
+    }
+
+    @Override
+    public int getExitAnim() {
+        return 0;
+    }
+
     /**
      * 外部预览监听事件
      */
@@ -1174,7 +1182,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
     /**
      * SimpleCameraX添加权限说明
      */
-    private static class MeOnSimpleXPermissionDescriptionListener implements OnSimpleXPermissionDescriptionListener {
+    private class MeOnSimpleXPermissionDescriptionListener implements OnSimpleXPermissionDescriptionListener {
 
         @Override
         public void onPermissionDescription(Context context, ViewGroup viewGroup, String permission) {
@@ -1200,7 +1208,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
     /**
      * 添加权限说明
      */
-    private static class MeOnPermissionDescriptionListener implements OnPermissionDescriptionListener {
+    private class MeOnPermissionDescriptionListener implements OnPermissionDescriptionListener {
 
         @Override
         public void onPermissionDescription(Fragment fragment, String[] permissionArray) {
@@ -1222,7 +1230,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
      * @param viewGroup
      * @param permissionArray
      */
-    private static void addPermissionDescription(boolean isHasSimpleXCamera, ViewGroup viewGroup, String[] permissionArray) {
+    private void addPermissionDescription(boolean isHasSimpleXCamera, ViewGroup viewGroup, String[] permissionArray) {
         int dp10 = DensityUtil.dip2px(viewGroup.getContext(), 10);
         int dp15 = DensityUtil.dip2px(viewGroup.getContext(), 15);
         MediumBoldTextView view = new MediumBoldTextView(viewGroup.getContext());
@@ -1260,7 +1268,8 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
         if (isHasSimpleXCamera) {
             RelativeLayout.LayoutParams layoutParams =
                     new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.topMargin = DensityUtil.getStatusBarHeight(viewGroup.getContext());
+            var statusBarHeight = ScreenConst.currentStatusBarAndNavBarHeight(this).second;
+            layoutParams.topMargin = statusBarHeight;
             layoutParams.leftMargin = dp10;
             layoutParams.rightMargin = dp10;
             viewGroup.addView(view, layoutParams);
@@ -1483,7 +1492,7 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
     /**
      * 录音回调事件
      */
-    private static class MeOnRecordAudioInterceptListener implements OnRecordAudioInterceptListener {
+    private class MeOnRecordAudioInterceptListener implements OnRecordAudioInterceptListener {
 
         @Override
         public void onRecordAudio(Fragment fragment, int requestCode) {
@@ -2361,5 +2370,10 @@ public class MainActivity extends AppCompatActivity implements IBridgePictureBeh
 
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void immersive(@NotNull Activity activity, @NotNull View root, int statusBarHeight, int navBarHeight) {
+        UtilKt.setTopAndBottomPadding(findViewById(R.id.rootView), statusBarHeight, navBarHeight);
     }
 }

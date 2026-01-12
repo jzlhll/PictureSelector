@@ -195,10 +195,11 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     }
 
     public void setTitleBarStyle() {
-        if (config.isPreviewFullScreenMode) {
-            ViewGroup.LayoutParams layoutParams = viewTopStatusBar.getLayoutParams();
-            layoutParams.height = DensityUtil.getStatusBarHeight(getContext());
-        }
+        //todo 这种写法肯定存在误区
+//        if (config.isPreviewFullScreenMode) {
+//            ViewGroup.LayoutParams layoutParams = viewTopStatusBar.getLayoutParams();
+//            layoutParams.height = DensityUtil.getStatusBarHeight(getContext());
+//        }
         PictureSelectorStyle selectorStyle = config.selectorStyle;
         TitleBarStyle titleBarStyle = selectorStyle.getTitleBarStyle();
         int titleBarHeight = titleBarStyle.getTitleBarHeight();

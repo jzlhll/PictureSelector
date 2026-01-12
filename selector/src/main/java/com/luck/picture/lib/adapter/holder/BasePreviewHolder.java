@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.luck.picture.lib.R;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -39,12 +40,13 @@ public abstract class BasePreviewHolder extends RecyclerView.ViewHolder {
      */
     public final static int ADAPTER_TYPE_AUDIO = 3;
 
-    protected final int screenWidth;
-    protected final int screenHeight;
-    protected final int screenAppInHeight;
     protected LocalMedia media;
     protected final SelectorConfig selectorConfig;
     public PhotoView coverImageView;
+
+    protected final int screenWidth = ScreenConst.instance.screenWidth;
+    protected final int screenHeight = ScreenConst.instance.screenHeight;
+    protected final int screenAppInHeight = ScreenConst.instance.screenAppInHeight;
 
     public static BasePreviewHolder generate(ViewGroup parent, int viewType, int resource) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
@@ -60,9 +62,6 @@ public abstract class BasePreviewHolder extends RecyclerView.ViewHolder {
     public BasePreviewHolder(@NonNull View itemView) {
         super(itemView);
         this.selectorConfig = SelectorProviders.getInstance().getSelectorConfig();
-        this.screenWidth = DensityUtil.getRealScreenWidth(itemView.getContext());
-        this.screenHeight = DensityUtil.getScreenHeight(itemView.getContext());
-        this.screenAppInHeight = DensityUtil.getRealScreenHeight(itemView.getContext());
         this.coverImageView = itemView.findViewById(R.id.preview_image);
         findViews(itemView);
     }

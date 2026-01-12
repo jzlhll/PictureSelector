@@ -14,11 +14,11 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.entity.MediaExtraInfo;
-import com.luck.picture.lib.immersive.ImmersiveManager;
 import com.luck.picture.lib.interfaces.OnResultCallbackListener;
 import com.luck.picture.lib.style.PictureSelectorStyle;
 import com.luck.picture.lib.style.SelectMainStyle;
 import com.luck.picture.lib.utils.MediaUtils;
+import com.yalantis.ucrop.statusbar.ImmersiveManager;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,6 @@ public class InjectFragmentActivity extends AppCompatActivity implements IBridge
         int navigationBarColor = ContextCompat.getColor(this, com.luck.picture.lib.R.color.ps_color_grey);
         int color = ContextCompat.getColor(this, R.color.app_color_white);
         ImmersiveManager.immersiveAboveAPI23(this, color, navigationBarColor, true);
-        ImmersiveManager.setDarkStatusBarIcon(this, true);
         setContentView(R.layout.activity_inject_fragment);
         tvResult = findViewById(R.id.tv_result);
         SelectMainStyle bottomNavBarStyle = pictureSelectorStyle.getSelectMainStyle();
@@ -51,7 +50,7 @@ public class InjectFragmentActivity extends AppCompatActivity implements IBridge
             @Override
             public void onClick(View v) {
                 // 方式一
-                PictureSelector.create(v.getContext())
+                PictureSelector.create(InjectFragmentActivity.this)
                         .openGallery(SelectMimeType.ofAll())
                         .setImageEngine(GlideEngine.createGlideEngine())
                         .setSelectorUIStyle(pictureSelectorStyle)
@@ -75,7 +74,7 @@ public class InjectFragmentActivity extends AppCompatActivity implements IBridge
             @Override
             public void onClick(View v) {
                 // 方式二
-                PictureSelectorFragment selectorFragment = PictureSelector.create(v.getContext())
+                PictureSelectorFragment selectorFragment = PictureSelector.create(InjectFragmentActivity.this)
                         .openGallery(SelectMimeType.ofAll())
                         .setImageEngine(GlideEngine.createGlideEngine())
                         .setSelectorUIStyle(pictureSelectorStyle)
@@ -146,7 +145,6 @@ public class InjectFragmentActivity extends AppCompatActivity implements IBridge
      * 设置状态栏字体颜色
      */
     private void setTranslucentStatusBar() {
-        ImmersiveManager.translucentStatusBar(InjectFragmentActivity.this, true);
     }
 
 }

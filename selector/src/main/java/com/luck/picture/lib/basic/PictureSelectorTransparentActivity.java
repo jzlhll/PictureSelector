@@ -1,8 +1,10 @@
 package com.luck.picture.lib.basic;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -10,38 +12,49 @@ import com.luck.picture.lib.PictureOnlyCameraFragment;
 import com.luck.picture.lib.PictureSelectorPreviewFragment;
 import com.luck.picture.lib.PictureSelectorSystemFragment;
 import com.luck.picture.lib.R;
+import com.luck.picture.lib.bases.AbsImmersiveActivity;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.immersive.ImmersiveManager;
 import com.luck.picture.lib.style.PictureWindowAnimationStyle;
-import com.luck.picture.lib.style.SelectMainStyle;
-import com.luck.picture.lib.utils.StyleUtils;
 
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-/**
- * @author：luck
- * @date：2022/2/10 6:07 下午
- * @describe：PictureSelectorTransparentActivity
- */
-public class PictureSelectorTransparentActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+
+public class PictureSelectorTransparentActivity extends AbsImmersiveActivity {
     private SelectorConfig selectorConfig;
 
     @Override
+    public int getEnterAnim() {
+        PictureWindowAnimationStyle windowAnimationStyle = selectorConfig.selectorStyle.getWindowAnimationStyle();
+        return windowAnimationStyle.activityEnterAnimation;
+    }
+
+    @Override
+    public int getExitAnim() {
+        int modeTypeSource = getIntent().getIntExtra(PictureConfig.EXTRA_MODE_TYPE_SOURCE, 0);
+        var animId = R.anim.ps_anim_fade_out;
+
+        if (modeTypeSource == PictureConfig.MODE_TYPE_EXTERNAL_PREVIEW_SOURCE && !selectorConfig.isPreviewZoomEffect) {
+            PictureWindowAnimationStyle windowAnimationStyle = selectorConfig.selectorStyle.getWindowAnimationStyle();
+            animId = windowAnimationStyle.activityExitAnimation;
+        }
+
+        return animId;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         initSelectorConfig();
-        immersive();
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.ps_empty);
-        immersiveAboveAPI35();
         if (!isExternalPreview()) {
             setActivitySize();
         }
@@ -55,37 +68,6 @@ public class PictureSelectorTransparentActivity extends AppCompatActivity {
     private boolean isExternalPreview() {
         int modeTypeSource = getIntent().getIntExtra(PictureConfig.EXTRA_MODE_TYPE_SOURCE, 0);
         return modeTypeSource == PictureConfig.MODE_TYPE_EXTERNAL_PREVIEW_SOURCE;
-    }
-
-    private void immersive() {
-        if (selectorConfig.selectorStyle == null) {
-            SelectorProviders.getInstance().getSelectorConfig();
-        }
-        SelectMainStyle mainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-        int statusBarColor = mainStyle.getStatusBarColor();
-        int navigationBarColor = mainStyle.getNavigationBarColor();
-        boolean isDarkStatusBarBlack = mainStyle.isDarkStatusBarBlack();
-        if (!StyleUtils.checkStyleValidity(statusBarColor)) {
-            statusBarColor = ContextCompat.getColor(this, R.color.ps_color_grey);
-        }
-        if (!StyleUtils.checkStyleValidity(navigationBarColor)) {
-            navigationBarColor = ContextCompat.getColor(this, R.color.ps_color_grey);
-        }
-        ImmersiveManager.immersiveAboveAPI23(this, statusBarColor, navigationBarColor, isDarkStatusBarBlack);
-    }
-
-    private void immersiveAboveAPI35() {
-        SelectMainStyle mainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-        int statusBarColor = mainStyle.getStatusBarColor();
-        int navigationBarColor = mainStyle.getNavigationBarColor();
-        boolean isDarkStatusBarBlack = mainStyle.isDarkStatusBarBlack();
-        ImmersiveManager.immersiveAboveAPI35(
-                this,
-                findViewById(R.id.rootView),
-                statusBarColor,
-                navigationBarColor,
-                isDarkStatusBarBlack
-        );
     }
 
     private void setupFragment() {
@@ -135,14 +117,7 @@ public class PictureSelectorTransparentActivity extends AppCompatActivity {
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        int modeTypeSource = getIntent().getIntExtra(PictureConfig.EXTRA_MODE_TYPE_SOURCE, 0);
-        if (modeTypeSource == PictureConfig.MODE_TYPE_EXTERNAL_PREVIEW_SOURCE && !selectorConfig.isPreviewZoomEffect) {
-            PictureWindowAnimationStyle windowAnimationStyle = selectorConfig.selectorStyle.getWindowAnimationStyle();
-            overridePendingTransition(0, windowAnimationStyle.activityExitAnimation);
-        } else {
-            overridePendingTransition(0, R.anim.ps_anim_fade_out);
-        }
+    public void immersive(@NotNull Activity activity, @NotNull View root, int statusBarHeight, int navBarHeight) {
+
     }
 }
