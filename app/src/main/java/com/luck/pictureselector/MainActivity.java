@@ -80,7 +80,6 @@ import com.luck.picture.lib.interfaces.OnBitmapWatermarkEventListener;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.interfaces.OnCameraInterceptListener;
 import com.luck.picture.lib.interfaces.OnCustomLoadingListener;
-import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener;
 import com.luck.picture.lib.interfaces.OnGridItemSelectAnimListener;
 import com.luck.picture.lib.interfaces.OnInjectActivityPreviewListener;
 import com.luck.picture.lib.interfaces.OnInjectLayoutResourceListener;
@@ -428,14 +427,13 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
                                         : InjectResourceSource.DEFAULT_LAYOUT_RESOURCE;
                             }
                         })
-                        .setExternalPreviewEventListener(new MyExternalPreviewEventListener())
                         .setInjectActivityPreviewFragment(new OnInjectActivityPreviewListener() {
                             @Override
                             public PictureSelectorPreviewFragment onInjectPreviewFragment() {
                                 return cb_custom_preview.isChecked() ? CustomPreviewFragment.newInstance() : null;
                             }
                         })
-                        .startActivityPreview(position, true, mAdapter.getData());
+                        .startActivityPreview(position, mAdapter.getData());
             }
 
             @Override
@@ -814,23 +812,6 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
     @Override
     public int getExitAnim() {
         return 0;
-    }
-
-    /**
-     * 外部预览监听事件
-     */
-    private class MyExternalPreviewEventListener implements OnExternalPreviewEventListener {
-
-        @Override
-        public void onPreviewDelete(int position) {
-            mAdapter.remove(position);
-            mAdapter.notifyItemRemoved(position);
-        }
-
-        @Override
-        public boolean onLongPressDownload(Context context, LocalMedia media) {
-            return false;
-        }
     }
 
     /**

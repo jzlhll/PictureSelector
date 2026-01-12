@@ -19,7 +19,6 @@ import com.luck.picture.lib.entity.LocalMediaFolder;
 import com.luck.picture.lib.interfaces.OnBitmapWatermarkEventListener;
 import com.luck.picture.lib.interfaces.OnCameraInterceptListener;
 import com.luck.picture.lib.interfaces.OnCustomLoadingListener;
-import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener;
 import com.luck.picture.lib.interfaces.OnGridItemSelectAnimListener;
 import com.luck.picture.lib.interfaces.OnInjectActivityPreviewListener;
 import com.luck.picture.lib.interfaces.OnInjectLayoutResourceListener;
@@ -264,7 +263,6 @@ public final class SelectorConfig {
     public OnCameraInterceptListener onCameraInterceptListener;
     public OnSelectLimitTipsListener onSelectLimitTipsListener;
     public OnResultCallbackListener<LocalMedia> onResultCallListener;
-    public OnExternalPreviewEventListener onExternalPreviewEventListener;
     public OnInjectActivityPreviewListener onInjectActivityPreviewListener;
     public OnMediaEditInterceptListener onEditMediaEventListener;
     public OnPermissionsInterceptListener onPermissionsEventListener;
@@ -361,7 +359,6 @@ public final class SelectorConfig {
         loaderDataEngine = null;
         onResultCallListener = null;
         onCameraInterceptListener = null;
-        onExternalPreviewEventListener = null;
         onInjectActivityPreviewListener = null;
         onEditMediaEventListener = null;
         onPermissionsEventListener = null;

@@ -6,11 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.luck.picture.lib.PictureSelectorPreviewFragment;
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.PictureConfig;
@@ -21,15 +18,12 @@ import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.engine.VideoPlayerEngine;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.interfaces.OnCustomLoadingListener;
-import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener;
 import com.luck.picture.lib.interfaces.OnInjectActivityPreviewListener;
 import com.luck.picture.lib.interfaces.OnInjectLayoutResourceListener;
 import com.luck.picture.lib.language.LanguageConfig;
 import com.luck.picture.lib.magical.BuildRecycleItemViewParams;
 import com.luck.picture.lib.style.PictureSelectorStyle;
 import com.luck.picture.lib.style.PictureWindowAnimationStyle;
-import com.luck.picture.lib.utils.ActivityCompatHelper;
-import com.luck.picture.lib.utils.DensityUtil;
 import com.luck.picture.lib.utils.DoubleUtils;
 
 import java.util.ArrayList;
@@ -254,17 +248,6 @@ public final class PictureSelectionPreviewModel {
     }
 
     /**
-     * Intercept external preview click events, and users can implement their own preview framework
-     *
-     * @param listener
-     * @return
-     */
-    public PictureSelectionPreviewModel setExternalPreviewEventListener(OnExternalPreviewEventListener listener) {
-        selectionConfig.onExternalPreviewEventListener = listener;
-        return this;
-    }
-
-    /**
      * startActivityPreview(); Preview mode, custom preview callback
      *
      * @param listener
@@ -315,7 +298,7 @@ public final class PictureSelectionPreviewModel {
      *                        You can do it {@link .setInjectActivityPreviewFragment()} interface, custom Preview
      *                        </p>
      */
-    public void startActivityPreview(int currentPosition, boolean isDisplayDelete, ArrayList<LocalMedia> list) {
+    public void startActivityPreview(int currentPosition, ArrayList<LocalMedia> list) {
         if (!DoubleUtils.isFastDoubleClick()) {
             Activity activity = selector.getActivity();
             if (activity == null) {
@@ -330,7 +313,6 @@ public final class PictureSelectionPreviewModel {
             Intent intent = new Intent(activity, PictureSelectorTransparentActivity.class);
             selectionConfig.addSelectedPreviewResult(list);
             intent.putExtra(PictureConfig.EXTRA_PREVIEW_CURRENT_POSITION, currentPosition);
-            intent.putExtra(PictureConfig.EXTRA_EXTERNAL_PREVIEW_DISPLAY_DELETE, isDisplayDelete);
             Fragment fragment = selector.getFragment();
             if (fragment != null) {
                 fragment.startActivity(intent);

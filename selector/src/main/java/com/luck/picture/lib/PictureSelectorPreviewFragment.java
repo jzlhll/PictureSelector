@@ -125,11 +125,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
      */
     protected boolean isShowCamera;
 
-    /**
-     * 外部预览是否支持删除
-     */
-    protected boolean isDisplayDelete;
-
     protected boolean isAnimationStart;
 
     protected int totalNum;
@@ -228,25 +223,7 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         initBottomNavBar();
         initPreviewSelectGallery((ViewGroup) view);
         initComplete();
-        immersiveAboveAPI35((ViewGroup) view);
         iniMagicalView();
-    }
-
-    private void immersiveAboveAPI35(ViewGroup rootView) {
-        SelectMainStyle mainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-        int navigationBarColor = mainStyle.getNavigationBarColor();
-        int bottomNarBarBackgroundColor = selectorConfig.selectorStyle.getBottomBarStyle().getBottomNarBarBackgroundColor();
-        int bottomPreviewNarBarBackgroundColor = selectorConfig.selectorStyle.getBottomBarStyle().getBottomPreviewNarBarBackgroundColor();
-        if (!StyleUtils.checkStyleValidity(navigationBarColor)) {
-            if (StyleUtils.checkStyleValidity(bottomPreviewNarBarBackgroundColor)) {
-                navigationBarColor = bottomPreviewNarBarBackgroundColor;
-            } else if (StyleUtils.checkStyleValidity(bottomNarBarBackgroundColor)) {
-                navigationBarColor = bottomNarBarBackgroundColor;
-            } else {
-                navigationBarColor = ContextCompat.getColor(requireContext(), R.color.ps_color_grey);
-            }
-        }
-        requireActivity().getWindow().setNavigationBarColor(navigationBarColor);
     }
 
     @Override
@@ -299,7 +276,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
             curPosition = savedInstanceState.getInt(PictureConfig.EXTRA_PREVIEW_CURRENT_POSITION, curPosition);
             isShowCamera = savedInstanceState.getBoolean(PictureConfig.EXTRA_DISPLAY_CAMERA, isShowCamera);
             totalNum = savedInstanceState.getInt(PictureConfig.EXTRA_PREVIEW_CURRENT_ALBUM_TOTAL, totalNum);
-            isDisplayDelete = savedInstanceState.getBoolean(PictureConfig.EXTRA_EXTERNAL_PREVIEW_DISPLAY_DELETE, isDisplayDelete);
             isInternalBottomPreview = savedInstanceState.getBoolean(PictureConfig.EXTRA_BOTTOM_PREVIEW, isInternalBottomPreview);
             currentAlbum = savedInstanceState.getString(PictureConfig.EXTRA_CURRENT_ALBUM_NAME, "");
             if (mData.size() == 0) {
@@ -475,7 +451,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         outState.putLong(PictureConfig.EXTRA_CURRENT_BUCKET_ID, mBucketId);
         outState.putInt(PictureConfig.EXTRA_PREVIEW_CURRENT_POSITION, curPosition);
         outState.putInt(PictureConfig.EXTRA_PREVIEW_CURRENT_ALBUM_TOTAL, totalNum);
-        outState.putBoolean(PictureConfig.EXTRA_EXTERNAL_PREVIEW_DISPLAY_DELETE, isDisplayDelete);
         outState.putBoolean(PictureConfig.EXTRA_DISPLAY_CAMERA, isShowCamera);
         outState.putBoolean(PictureConfig.EXTRA_BOTTOM_PREVIEW, isInternalBottomPreview);
         outState.putString(PictureConfig.EXTRA_CURRENT_ALBUM_NAME, currentAlbum);
@@ -938,45 +913,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
         }
     }
 
-    /**
-     * 调用了startPreview预览逻辑
-     */
-    @SuppressLint("NotifyDataSetChanged")
-    private void deletePreview() {
-        if (isDisplayDelete) {
-            if (selectorConfig.onExternalPreviewEventListener != null) {
-                selectorConfig.onExternalPreviewEventListener.onPreviewDelete(viewPager.getCurrentItem());
-                int currentItem = viewPager.getCurrentItem();
-                mData.remove(currentItem);
-                if (mData.size() == 0) {
-                    handleExternalPreviewBack();
-                    return;
-                }
-                titleBar.setTitle(getString(R.string.ps_preview_image_num,
-                        curPosition + 1, mData.size()));
-                totalNum = mData.size();
-                curPosition = currentItem;
-                if (viewPager.getAdapter() != null) {
-                    viewPager.setAdapter(null);
-                    viewPager.setAdapter(viewPageAdapter);
-                }
-                viewPager.setCurrentItem(curPosition, false);
-            }
-        }
-    }
-
-    /**
-     * 处理外部预览返回处理
-     */
-    private void handleExternalPreviewBack() {
-        if (!ActivityCompatHelper.isDestroy(getActivity())) {
-            if (selectorConfig.isPreviewFullScreenMode) {
-                hideFullScreenStatusBar();
-            }
-            onExitPictureSelector();
-        }
-    }
-
     @Override
     public void onExitFragment() {
         if (selectorConfig.isPreviewFullScreenMode) {
@@ -1229,58 +1165,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
             mAnimViews.get(i).setEnabled(true);
         }
         bottomNarBar.getEditor().setEnabled(true);
-    }
-
-    /**
-     * 外部预览长按下载
-     *
-     * @param media
-     */
-    private void onExternalLongPressDownload(LocalMedia media) {
-        if (selectorConfig.onExternalPreviewEventListener != null) {
-            if (!selectorConfig.onExternalPreviewEventListener.onLongPressDownload(getContext(), media)) {
-                String content;
-                if (PictureMimeType.isHasAudio(media.getMimeType())
-                        || PictureMimeType.isUrlHasAudio(media.getAvailablePath())) {
-                    content = getString(R.string.ps_prompt_audio_content);
-                } else if (PictureMimeType.isHasVideo(media.getMimeType())
-                        || PictureMimeType.isUrlHasVideo(media.getAvailablePath())) {
-                    content = getString(R.string.ps_prompt_video_content);
-                } else {
-                    content = getString(R.string.ps_prompt_image_content);
-                }
-                PictureCommonDialog dialog = PictureCommonDialog.showDialog(getContext(), getString(R.string.ps_prompt), content);
-                dialog.setOnDialogEventListener(new PictureCommonDialog.OnDialogEventListener() {
-                    @Override
-                    public void onConfirm() {
-                        String path = media.getAvailablePath();
-                        if (PictureMimeType.isHasHttp(path)) {
-                            showLoading();
-                        }
-                        DownloadFileUtils.saveLocalFile(getContext(), path, media.getMimeType(), new OnCallbackListener<String>() {
-                            @Override
-                            public void onCall(String realPath) {
-                                dismissLoading();
-                                if (TextUtils.isEmpty(realPath)) {
-                                    String errorMsg;
-                                    if (PictureMimeType.isHasAudio(media.getMimeType())) {
-                                        errorMsg = getString(R.string.ps_save_audio_error);
-                                    } else if (PictureMimeType.isHasVideo(media.getMimeType())) {
-                                        errorMsg = getString(R.string.ps_save_video_error);
-                                    } else {
-                                        errorMsg = getString(R.string.ps_save_image_error);
-                                    }
-                                    ToastUtils.showToast(getContext(), errorMsg);
-                                } else {
-                                    new PictureMediaScannerConnection(getActivity(), realPath);
-                                    ToastUtils.showToast(getContext(), getString(R.string.ps_save_success) + "\n" + realPath);
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        }
     }
 
     private final ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
