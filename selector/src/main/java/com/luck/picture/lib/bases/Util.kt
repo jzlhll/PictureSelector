@@ -20,6 +20,32 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.luck.picture.lib.R
 
+
+/**
+ * 修改状态栏文字颜色
+ * isAppearanceLightXXX true就表示文字就是黑色的。false就表示文字就是白色的。所以要传入正确的值。
+ */
+fun Activity.changeBarsColor(statusBarTextDark: Boolean? = null,
+                             navBarTextDark: Boolean? = null,
+                             statusColor:Int?= null,
+                             navColor:Int?=null) {
+    val light = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    window.changeBarsTextColor(statusBarTextDark ?: light, navBarTextDark ?: light, statusColor, navColor)
+}
+
+fun Window.changeBarsTextColor(statusBarTextDark: Boolean,
+                               navBarTextDark: Boolean,
+                               statusColor:Int?= null,
+                               navColor:Int?=null) {
+    val controller = WindowInsetsControllerCompat(this, this.decorView)
+
+    controller.isAppearanceLightStatusBars = statusBarTextDark
+    controller.isAppearanceLightNavigationBars = navBarTextDark
+
+    statusBarColor = statusColor ?: Color.TRANSPARENT  //android15一直是透明。所以你需要自己做padding，然后绘制。
+    navigationBarColor = navColor ?: Color.TRANSPARENT //android15一直是透明。所以你需要自己做padding，然后绘制。
+}
+
 fun ComponentActivity.enableEdgeToEdgeFix(
     statusBarStyle: SystemBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
     navigationBarStyle: SystemBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
@@ -48,33 +74,6 @@ fun View.setTopPadding(statusHeight:Int) {
 fun View.setTopAndBottomPadding(statusHeight:Int, navHeight:Int) {
     updatePadding(top = statusHeight, bottom = navHeight);
 }
-
-//
-///**
-// * 修改状态栏文字颜色
-// * isAppearanceLightXXX true就表示文字就是黑色的。false就表示文字就是白色的。所以要传入正确的值。
-// */
-//fun Activity.changeBarsColor(statusBarTextDark: Boolean? = null,
-//                             navBarTextDark: Boolean? = null,
-//                             statusColor:Int?= null,
-//                             navColor:Int?=null) {
-//    val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-//    val light = mode == Configuration.UI_MODE_NIGHT_YES
-//    window.changeBarsTextColor(statusBarTextDark ?: light, navBarTextDark ?: light, statusColor, navColor)
-//}
-//
-//fun Window.changeBarsTextColor(statusBarTextDark: Boolean,
-//                               navBarTextDark: Boolean,
-//                               statusColor:Int?= null,
-//                               navColor:Int?=null) {
-//    val controller = WindowInsetsControllerCompat(this, this.decorView)
-//
-//    controller.isAppearanceLightStatusBars = statusBarTextDark
-//    controller.isAppearanceLightNavigationBars = navBarTextDark
-//
-//    statusBarColor = statusColor ?: Color.TRANSPARENT  //android15一直是透明。所以你需要自己做padding，然后绘制。
-//    navigationBarColor = navColor ?: Color.TRANSPARENT //android15一直是透明。所以你需要自己做padding，然后绘制。
-//}
 
 internal inline fun <T:Any> ignoreError(
     block: () -> T?

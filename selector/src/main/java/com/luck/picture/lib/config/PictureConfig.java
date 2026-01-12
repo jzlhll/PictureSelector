@@ -24,8 +24,6 @@ public final class PictureConfig {
 
     public final static String EXTRA_QUICK_CAPTURE = "android.intent.extra.quickCapture";
 
-    public final static String EXTRA_EXTERNAL_PREVIEW = KEY + ".external_preview";
-
     public final static String EXTRA_DISPLAY_CAMERA = KEY + ".display_camera";
 
     public final static String EXTRA_BOTTOM_PREVIEW = KEY + ".bottom_preview";
@@ -43,8 +41,6 @@ public final class PictureConfig {
     public final static String EXTRA_PREVIEW_CURRENT_ALBUM_TOTAL = KEY + ".current_album_total";
 
     public final static String EXTRA_CURRENT_CHOOSE_MODE = KEY + ".current_choose_mode";
-
-    public final static String EXTRA_MODE_TYPE_SOURCE = KEY + ".mode_type_source";
 
     public final static int MAX_PAGE_SIZE = 60;
 
@@ -65,7 +61,4 @@ public final class PictureConfig {
     public final static int ALL = -1;
 
     public final static int UNSET = -1;
-
-    public final static int MODE_TYPE_SYSTEM_SOURCE = 1;
-    public final static int MODE_TYPE_EXTERNAL_PREVIEW_SOURCE = 2;
 }

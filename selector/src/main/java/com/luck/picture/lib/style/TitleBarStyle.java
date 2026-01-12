@@ -83,11 +83,6 @@ public class TitleBarStyle {
     private boolean isHideCancelButton;
 
     /**
-     * 外部预览删除
-     */
-    private int previewDeleteBackgroundResource;
-
-    /**
      * 标题栏右边默认文本
      */
     private String titleCancelText;
@@ -237,14 +232,6 @@ public class TitleBarStyle {
 
     public void setHideCancelButton(boolean hideCancelButton) {
         isHideCancelButton = hideCancelButton;
-    }
-
-    public int getPreviewDeleteBackgroundResource() {
-        return previewDeleteBackgroundResource;
-    }
-
-    public void setPreviewDeleteBackgroundResource(int previewDeleteBackgroundResource) {
-        this.previewDeleteBackgroundResource = previewDeleteBackgroundResource;
     }
 
     public String getTitleCancelText() {

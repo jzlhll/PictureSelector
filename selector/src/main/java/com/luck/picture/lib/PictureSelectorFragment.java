@@ -100,7 +100,6 @@ public class PictureSelectorFragment extends PictureCommonFragment
     private TextView tvDataEmpty;
     private TitleBar titleBar;
     private BottomNavBar bottomNarBar;
-    private CompleteSelectView completeSelectView;
     private TextView tvCurrentDataTime;
     private long intervalClickTime = 0;
     private int allFolderSize;
@@ -147,11 +146,9 @@ public class PictureSelectorFragment extends PictureCommonFragment
         if (selectMediaList == null || selectMediaList.isEmpty()) {
             throw new RuntimeException("Please select at least one picture");
         }
-
         bottomNarBar.setSelectedChange();
         titleBar.setSelectedChange(); //allan added
 
-        completeSelectView.setSelectedChange(false);
         // 刷新列表数据
         var isMulti = selectMediaList.size() > 1;
         var isNotifyAll = isMulti || checkNotifyStrategy(isAddRemove);
@@ -251,7 +248,6 @@ public class PictureSelectorFragment extends PictureCommonFragment
         reStartSavedInstance(savedInstanceState);
         isMemoryRecycling = savedInstanceState != null;
         tvDataEmpty = view.findViewById(R.id.tv_data_empty);
-        completeSelectView = view.findViewById(R.id.ps_complete_select);
         titleBar = view.findViewById(R.id.title_bar);
         bottomNarBar = view.findViewById(R.id.bottom_nar_bar);
         tvCurrentDataTime = view.findViewById(R.id.tv_current_data_time);
@@ -312,11 +308,11 @@ public class PictureSelectorFragment extends PictureCommonFragment
             selectorConfig.selectorStyle.getTitleBarStyle().setHideCancelButton(false);
             //allan modify这里不合理，会让preview也显示delete
             //titleBar.getTitleCancelView().setVisibility(View.VISIBLE);
-            completeSelectView.setVisibility(View.GONE);
+            bottomNarBar.completeSelectView.setVisibility(View.GONE);
         } else {
-            completeSelectView.setCompleteSelectViewStyle();
-            completeSelectView.setSelectedChange(false);
-            completeSelectView.setOnClickListener(new View.OnClickListener() {
+            bottomNarBar.completeSelectView.setCompleteSelectViewStyle();
+            bottomNarBar.completeSelectView.setSelectedChange(false);
+            bottomNarBar.completeSelectView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (selectorConfig.isEmptyResultReturn && selectorConfig.getSelectCount() == 0) {
@@ -888,8 +884,8 @@ public class PictureSelectorFragment extends PictureCommonFragment
             @Override
             public void onItemLongClick(View itemView, int position) {
                 if (mDragSelectTouchListener != null && selectorConfig.isFastSlidingSelect) {
-                    Vibrator vibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
-                    vibrator.vibrate(50);
+//                    Vibrator vibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
+//                    vibrator.vibrate(50);
                     mDragSelectTouchListener.startSlideSelection(position);
                 }
             }

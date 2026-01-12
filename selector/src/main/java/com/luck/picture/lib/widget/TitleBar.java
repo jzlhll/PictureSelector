@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.luck.picture.lib.PictureSelectorFragment;
 import com.luck.picture.lib.R;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
@@ -34,7 +35,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     protected RelativeLayout rlAlbumBg;
     protected ImageView ivLeftBack;
     protected ImageView ivArrow;
-    protected ImageView ivDelete;
     protected MarqueeTextView tvTitle;
     protected TextView tvCancel;
     protected View titleBarLine;
@@ -133,7 +133,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         titleBarLayout = findViewById(R.id.rl_title_bar);
         ivLeftBack = findViewById(R.id.ps_iv_left_back);
         rlAlbumBg = findViewById(R.id.ps_rl_album_bg);
-        ivDelete = findViewById(R.id.ps_iv_delete);
         viewAlbumClickArea = findViewById(R.id.ps_rl_album_click);
         tvTitle = findViewById(R.id.ps_tv_title);
         ivArrow = findViewById(R.id.ps_iv_arrow);
@@ -165,10 +164,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         return ivArrow;
     }
 
-    public ImageView getImageDelete() {
-        return ivDelete;
-    }
-
     /**
      * title bar line
      *
@@ -195,11 +190,10 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     }
 
     public void setTitleBarStyle() {
-        //todo 这种写法肯定存在误区
-//        if (config.isPreviewFullScreenMode) {
-//            ViewGroup.LayoutParams layoutParams = viewTopStatusBar.getLayoutParams();
-//            layoutParams.height = DensityUtil.getStatusBarHeight(getContext());
-//        }
+        if (config.isPreviewFullScreenMode) {
+            ViewGroup.LayoutParams layoutParams = viewTopStatusBar.getLayoutParams();
+            layoutParams.height = ScreenConst.instance.statusBarHeight;
+        }
         PictureSelectorStyle selectorStyle = config.selectorStyle;
         TitleBarStyle titleBarStyle = selectorStyle.getTitleBarStyle();
         int titleBarHeight = titleBarStyle.getTitleBarHeight();
@@ -275,13 +269,6 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
             if (StyleUtils.checkSizeValidity(titleCancelTextSize)) {
                 tvCancel.setTextSize(titleCancelTextSize);
             }
-        }
-
-        int deleteBackgroundResource = titleBarStyle.getPreviewDeleteBackgroundResource();
-        if (StyleUtils.checkStyleValidity(deleteBackgroundResource)) {
-            ivDelete.setBackgroundResource(deleteBackgroundResource);
-        } else {
-            ivDelete.setBackgroundResource(R.drawable.ps_ic_delete);
         }
     }
 

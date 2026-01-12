@@ -308,59 +308,6 @@ public final class PictureSelectionPreviewModel {
     /**
      * preview LocalMedia
      *
-     * @param currentPosition
-     * @param isDisplayDelete
-     * @param list
-     */
-    public void startFragmentPreview(int currentPosition, boolean isDisplayDelete, ArrayList<LocalMedia> list) {
-        startFragmentPreview(null, currentPosition, isDisplayDelete, list);
-    }
-
-    /**
-     * preview LocalMedia
-     *
-     * @param previewFragment PictureSelectorPreviewFragment
-     * @param currentPosition current position
-     * @param isDisplayDelete if visible delete
-     * @param list            preview data
-     */
-    public void startFragmentPreview(PictureSelectorPreviewFragment previewFragment, int currentPosition, boolean isDisplayDelete, ArrayList<LocalMedia> list) {
-        if (!DoubleUtils.isFastDoubleClick()) {
-            Activity activity = selector.getActivity();
-            if (activity == null) {
-                throw new NullPointerException("Activity cannot be null");
-            }
-            if (selectionConfig.imageEngine == null && selectionConfig.chooseMode != SelectMimeType.ofAudio()) {
-                throw new NullPointerException("imageEngine is null,Please implement ImageEngine");
-            }
-            if (list == null || list.size() == 0) {
-                throw new NullPointerException("preview data is null");
-            }
-            FragmentManager fragmentManager = null;
-            if (activity instanceof FragmentActivity) {
-                fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-            }
-            if (fragmentManager == null) {
-                throw new NullPointerException("FragmentManager cannot be null");
-            }
-            String fragmentTag;
-            if (previewFragment != null) {
-                fragmentTag = previewFragment.getFragmentTag();
-            } else {
-                fragmentTag = PictureSelectorPreviewFragment.TAG;
-                previewFragment = PictureSelectorPreviewFragment.newInstance();
-            }
-            if (ActivityCompatHelper.checkFragmentNonExits((FragmentActivity) activity, fragmentTag)) {
-                ArrayList<LocalMedia> previewData = new ArrayList<>(list);
-                previewFragment.setExternalPreviewData(currentPosition, previewData.size(), previewData, isDisplayDelete);
-                FragmentInjectManager.injectSystemRoomFragment(fragmentManager, fragmentTag, previewFragment);
-            }
-        }
-    }
-
-    /**
-     * preview LocalMedia
-     *
      * @param currentPosition current position
      * @param isDisplayDelete if visible delete
      * @param list            preview data
@@ -382,8 +329,6 @@ public final class PictureSelectionPreviewModel {
             }
             Intent intent = new Intent(activity, PictureSelectorTransparentActivity.class);
             selectionConfig.addSelectedPreviewResult(list);
-            intent.putExtra(PictureConfig.EXTRA_EXTERNAL_PREVIEW, true);
-            intent.putExtra(PictureConfig.EXTRA_MODE_TYPE_SOURCE, PictureConfig.MODE_TYPE_EXTERNAL_PREVIEW_SOURCE);
             intent.putExtra(PictureConfig.EXTRA_PREVIEW_CURRENT_POSITION, currentPosition);
             intent.putExtra(PictureConfig.EXTRA_EXTERNAL_PREVIEW_DISPLAY_DELETE, isDisplayDelete);
             Fragment fragment = selector.getFragment();

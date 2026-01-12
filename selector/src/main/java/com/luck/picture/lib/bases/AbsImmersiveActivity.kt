@@ -13,10 +13,10 @@ abstract class AbsImmersiveActivity : AppCompatActivity() {
     abstract val enterAnim:Int
     abstract val exitAnim:Int
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdgeFix()
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
             if(enterAnim != 0) overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, enterAnim, 0)
             if(exitAnim != 0) overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, exitAnim)

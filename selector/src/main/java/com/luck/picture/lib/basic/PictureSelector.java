@@ -78,18 +78,6 @@ public final class PictureSelector {
     }
 
     /**
-     * @param chooseMode Select the type of images you want，all or images or video or audio
-     * @return LocalMedia PictureSelectionSystemModel
-     * Use {@link SelectMimeType}
-     * <p>
-     * openSystemGallery mode only supports some APIs
-     * </p>
-     */
-    public PictureSelectionSystemModel openSystemGallery(int chooseMode) {
-        return new PictureSelectionSystemModel(this, chooseMode);
-    }
-
-    /**
      * @param selectMimeType query the type of images you want，all or images or video or audio
      * @return LocalMedia PictureSelectionQueryModel
      * Use {@link SelectMimeType}

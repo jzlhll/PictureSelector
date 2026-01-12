@@ -2,10 +2,16 @@ package com.luck.picture.lib.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.config.SelectorProviders;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.manager.SelectedManager;
 import com.luck.picture.lib.style.TitleBarStyle;
 import com.luck.picture.lib.utils.StyleUtils;
 
@@ -26,6 +32,20 @@ public class PreviewTitleBar extends TitleBar {
 
     public PreviewTitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public TextView tvSelected;
+
+    public TextView tvSelectedWord;
+
+    private Runnable selectedClick;
+
+    public void setOnSelectClick(Runnable runnable) {
+        selectedClick = runnable;
+    }
+
+    protected void inflateLayout() {
+        LayoutInflater.from(getContext()).inflate(R.layout.ps_title_bar_preview, this);
     }
 
     @Override
@@ -49,5 +69,18 @@ public class PreviewTitleBar extends TitleBar {
         tvCancel.setVisibility(GONE);
         ivArrow.setVisibility(GONE);
         viewAlbumClickArea.setVisibility(GONE);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        tvSelected = findViewById(R.id.ps_tv_selected);
+        tvSelectedWord = findViewById(R.id.ps_tv_selected_word);
+        tvSelectedWord.setOnClickListener(v -> {
+            if(selectedClick != null) selectedClick.run();
+        });
+        tvSelected.setOnClickListener(v -> {
+            if(selectedClick != null) selectedClick.run();
+        });
     }
 }

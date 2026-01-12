@@ -41,6 +41,7 @@ public class PictureSelectorSupporterActivity extends AbsImmersiveActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         initSelectorConfig();
         super.onCreate(savedInstanceState);
+        UtilKt.changeBarsColor(this, false, null, null, null);
         setContentView(R.layout.ps_activity_container);
         setupFragment();
     }

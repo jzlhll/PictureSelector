@@ -8,9 +8,11 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.luck.picture.lib.R;
+import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.config.SelectorConfig;
 import com.luck.picture.lib.config.SelectorProviders;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -30,6 +32,7 @@ public class BottomNavBar extends RelativeLayout implements View.OnClickListener
     protected TextView tvImageEditor;
     private CheckBox originalCheckbox;
     protected SelectorConfig config;
+    public CompleteSelectView completeSelectView;
 
     public BottomNavBar(Context context) {
         super(context);
@@ -48,9 +51,11 @@ public class BottomNavBar extends RelativeLayout implements View.OnClickListener
 
     protected void init() {
         inflateLayout();
+        findViewById(R.id.ps_nav_bar).getLayoutParams().height = ScreenConst.instance.navigationBarHeight;
         setClickable(true);
         setFocusable(true);
         config = SelectorProviders.getInstance().getSelectorConfig();
+        completeSelectView = findViewById(R.id.ps_complete_select);
         tvPreview = findViewById(R.id.ps_tv_preview);
         tvImageEditor = findViewById(R.id.ps_tv_editor);
         originalCheckbox = findViewById(R.id.cb_original);
@@ -111,10 +116,11 @@ public class BottomNavBar extends RelativeLayout implements View.OnClickListener
         }
 
         int narBarHeight = bottomBarStyle.getBottomNarBarHeight();
+        var bottomHost = findViewById(R.id.bottomHost);
         if (StyleUtils.checkSizeValidity(narBarHeight)) {
-            getLayoutParams().height = narBarHeight;
+            bottomHost.getLayoutParams().height = narBarHeight;
         } else {
-            getLayoutParams().height = DensityUtil.dip2px(getContext(), 46);
+            bottomHost.getLayoutParams().height = DensityUtil.dip2px(getContext(), 46);
         }
 
         int backgroundColor = bottomBarStyle.getBottomNarBarBackgroundColor();
@@ -186,6 +192,8 @@ public class BottomNavBar extends RelativeLayout implements View.OnClickListener
         calculateFileTotalSize();
         PictureSelectorStyle selectorStyle = config.selectorStyle;
         BottomNavBarStyle bottomBarStyle = selectorStyle.getBottomBarStyle();
+        completeSelectView.setSelectedChange(false);
+
         if (config.getSelectCount() > 0) {
             tvPreview.setEnabled(true);
             int previewSelectTextColor = bottomBarStyle.getBottomPreviewSelectTextColor();
