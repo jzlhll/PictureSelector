@@ -11,7 +11,7 @@
     <string name="ps_message_video_max_num">Select up to %1$s Video</string>
     <string name="ps_preview">Preview</string>
     <string name="ps_please">Please later…</string>
-    <string name="ps_done_front_num">%1$d/%2$d Ok</string>
+    <string name="ps_done_front_num">%1$d OK</string>
     <string name="ps_completed">Completed</string>
     <string name="ps_done">Complete</string>
     <string name="ps_please_select">Please Select</string>
@@ -54,7 +54,7 @@
     <string name="ps_original_image">Original (%1$s)</string>
     <string name="ps_default_original_image">Original</string>
     <string name="ps_send">Complete</string>
-    <string name="ps_send_num">Complete(%1$d/%2$d)</string>
+    <string name="ps_send_num">Complete(%1$d)</string>
     <string name="ps_preview_num">Preview(%1$d)</string>
     <string name="ps_select">Choose</string>
     <string name="ps_data_exception">Get album data exception…</string>

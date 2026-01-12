@@ -10,7 +10,7 @@
     <string name="ps_message_audio_max_num">음성파일은 최대 %1$s 개 선택할 수 있습니다.</string>
     <string name="ps_preview">미리보기</string>
     <string name="ps_please">잠시만 기다려 주세요.</string>
-    <string name="ps_done_front_num">%1$d/%2$d 완료</string>
+    <string name="ps_done_front_num">%1$d 완료</string>
     <string name="ps_completed">완료</string>
     <string name="ps_done">완료</string>
     <string name="ps_please_select">선택해주세요</string>
@@ -51,7 +51,7 @@
     <string name="ps_original_image">원본 이미지 (%1$s)</string>
     <string name="ps_default_original_image">원본 이미지</string>
     <string name="ps_send">완료</string>
-    <string name="ps_send_num">완료(%1$d/%2$d)</string>
+    <string name="ps_send_num">완료(%1$d)</string>
     <string name="ps_preview_num">미리보기(%1$d)</string>
     <string name="ps_select">확인</string>
     <string name="ps_data_exception">앨범 정보 이상 가져오기…</string>

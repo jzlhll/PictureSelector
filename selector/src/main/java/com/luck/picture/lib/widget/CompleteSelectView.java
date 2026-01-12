@@ -133,8 +133,6 @@ public class CompleteSelectView extends LinearLayout {
                 int formatCount = StyleUtils.getFormatCount(selectText);
                 if (formatCount == 1) {
                     tvComplete.setText(String.format(selectText, config.getSelectCount()));
-                } else if (formatCount == 2) {
-                    tvComplete.setText(String.format(selectText, config.getSelectCount(), config.maxSelectNum));
                 } else {
                     tvComplete.setText(selectText);
                 }

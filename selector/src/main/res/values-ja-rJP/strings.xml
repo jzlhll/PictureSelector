@@ -10,7 +10,7 @@
     <string name="ps_message_audio_max_num">最大で %1$s の音声を選択できます</string>
     <string name="ps_preview">プレビュー</string>
     <string name="ps_please">お待ち下さい</string>
-    <string name="ps_done_front_num">%1$d/%2$d</string>
+    <string name="ps_done_front_num">%1$d OK</string>
     <string name="ps_completed">決定</string>
     <string name="ps_done">決定</string>
     <string name="ps_please_select">選んでください</string>
@@ -53,7 +53,7 @@
     <string name="ps_original_image">元の画像 (%1$s)</string>
     <string name="ps_default_original_image">元の画像</string>
     <string name="ps_send">選択</string>
-    <string name="ps_send_num">選択(%1$d/%2$d)</string>
+    <string name="ps_send_num">選択(%1$d)</string>
     <string name="ps_preview_num">プレビュー(%1$d)</string>
     <string name="ps_select">選択</string>
     <string name="ps_data_exception">アルバムデータを取得できません</string>

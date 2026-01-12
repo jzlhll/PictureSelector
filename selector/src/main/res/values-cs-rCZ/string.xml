@@ -11,7 +11,7 @@
     <string name="ps_message_video_max_num">Vyberte až %1$s videí</string>
     <string name="ps_preview">Náhled</string>
     <string name="ps_please">Prosím později…</string>
-    <string name="ps_done_front_num">%1$d/%2$d Ok</string>
+    <string name="ps_done_front_num">%1$d OK</string>
     <string name="ps_completed">Dokončeno</string>
     <string name="ps_done">Dokončit</string>
     <string name="ps_please_select">Prosím vyberte</string>
@@ -55,7 +55,7 @@
     <string name="ps_original_image">Původní (%1$s)</string>
     <string name="ps_default_original_image">Původní</string>
     <string name="ps_send">Hotovo</string>
-    <string name="ps_send_num">Hotovo(%1$d/%2$d)</string>
+    <string name="ps_send_num">Hotovo(%1$d)</string>
     <string name="ps_preview_num">Náhled(%1$d)</string>
     <string name="ps_select">Vybrat</string>
     <string name="ps_data_exception">Výjimka při získávání dat z alba…</string>

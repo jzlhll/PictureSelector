@@ -10,7 +10,7 @@
     <string name="ps_message_audio_max_num">Vous pouvez choisir au maximum %1$s audio</string>
     <string name="ps_preview">avant-première</string>
     <string name="ps_please">attendez…</string>
-    <string name="ps_done_front_num">%1$d/%2$d L’achèvement</string>
+    <string name="ps_done_front_num">%1$d OK</string>
     <string name="ps_completed">achevés</string>
     <string name="ps_done">L’achèvement du</string>
     <string name="ps_please_select">Le choix</string>
@@ -51,7 +51,7 @@
     <string name="ps_original_image">Original (%1$s)</string>
     <string name="ps_default_original_image">Original</string>
     <string name="ps_send">Finir</string>
-    <string name="ps_send_num">Finir(%1$d/%2$d)</string>
+    <string name="ps_send_num">Finir(%1$d)</string>
     <string name="ps_preview_num">voir(%1$d)</string>
     <string name="ps_select">Le choix</string>
     <string name="ps_data_exception">Anomalie des données de l’album…</string>

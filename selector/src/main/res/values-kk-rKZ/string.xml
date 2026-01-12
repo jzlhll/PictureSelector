@@ -11,7 +11,7 @@
     <string name="ps_message_video_max_num">%1$s бейне таңдауға болады</string>
     <string name="ps_preview">Алдын ала қарау</string>
     <string name="ps_please">Кейінірек растау …</string>
-    <string name="ps_done_front_num">%1$d/%2$d Ок</string>
+    <string name="ps_done_front_num">%1$d OK</string>
     <string name="ps_completed">Толтырылды</string>
     <string name="ps_done">Толтыру</string>
     <string name="ps_please_select">Таңдаңыз</string>
@@ -56,7 +56,7 @@
     <string name="ps_original_image">Негізгі (%1$s)</string>
     <string name="ps_default_original_image">Негізгі</string>
     <string name="ps_send">Аяқтау</string>
-    <string name="ps_send_num">Аяқтау(%1$d/%2$d)</string>
+    <string name="ps_send_num">Аяқтау(%1$d)</string>
     <string name="ps_preview_num">Алдын-ала қарау(%1$d)</string>
     <string name="ps_select">Таңдау</string>
     <string name="ps_data_exception">Альбомдық деректерді алу қателігі…</string>

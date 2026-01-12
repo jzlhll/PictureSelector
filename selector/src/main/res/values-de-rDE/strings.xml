@@ -10,7 +10,7 @@
     <string name="ps_message_audio_max_num">Sie können bis zu %1$s Audio auswählen</string>
     <string name="ps_preview">Vorschau</string>
     <string name="ps_please">Bitte warten…</string>
-    <string name="ps_done_front_num">%1$d/%2$d Vervollständigen</string>
+    <string name="ps_done_front_num">%1$d Vervollständigen</string>
     <string name="ps_completed">Abgeschlossen</string>
     <string name="ps_done">Vollständig</string>
     <string name="ps_please_select">Bitte wählen Sie</string>
@@ -53,7 +53,7 @@
     <string name="ps_original_image">Original (%1$s)</string>
     <string name="ps_default_original_image">Original</string>
     <string name="ps_send">Vollständig</string>
-    <string name="ps_send_num">Vollständig(%1$d/%2$d)</string>
+    <string name="ps_send_num">Vollständig(%1$d)</string>
     <string name="ps_preview_num">Siehe(%1$d)</string>
     <string name="ps_select">Auswahl</string>
     <string name="ps_data_exception">Ausnahme von Album-Daten…</string>
