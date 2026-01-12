@@ -25,27 +25,9 @@ public class SelectMainStyle {
     private boolean isDarkStatusBarBlack = false;
 
     /**
-     * 完成按钮从底部放在右上角
-     */
-    private boolean isCompleteSelectRelativeTop;
-
-    /**
-     * 预览页选择按钮从顶部放在右下角
-     */
-    private boolean isPreviewSelectRelativeBottom;
-
-    /**
      * 预览页是否显示选择画廊
      */
     private boolean isPreviewDisplaySelectGallery;
-
-    /**
-     * 预览页选择按钮MarginRight
-     * <p>
-     * unit dp
-     * </p>
-     */
-    private int previewSelectMarginRight;
 
     /**
      * 预览背景色
@@ -165,23 +147,9 @@ public class SelectMainStyle {
     private int adapterSelectTextSize;
 
     /**
-     * 勾选按钮点击区域
-     * <p>
-     * use unit dp
-     * </p>
-     */
-    private int adapterSelectClickArea;
-
-    /**
      * 勾选样式字体色值
      */
     private int adapterSelectTextColor;
-
-    /**
-     * 勾选样式位置
-     * {@link RelativeLayout.addRule()}
-     */
-    private int[] adapterSelectStyleGravity;
 
     /**
      * 资源类型标识
@@ -197,12 +165,6 @@ public class SelectMainStyle {
      * 时长文字颜色
      */
     private int adapterDurationTextColor;
-
-    /**
-     * 时长文字位置
-     * {@link RelativeLayout.addRule()}
-     */
-    private int[] adapterDurationGravity;
 
     /**
      * 时长文字阴影背景
@@ -250,20 +212,9 @@ public class SelectMainStyle {
      */
     private int adapterTagTextColor;
     /**
-     * 资源标识的位置
-     * {@link RelativeLayout.addRule()}
-     */
-    private int[] adapterTagGravity;
-    /**
      * 图片被编辑标识
      */
     private int adapterImageEditorResources;
-
-    /**
-     * 图片被编辑标识位置
-     * {@link RelativeLayout.addRule()}
-     */
-    private int[] adapterImageEditorGravity;
 
     /**
      * 预览页画廊边框样式
@@ -311,36 +262,12 @@ public class SelectMainStyle {
         isDarkStatusBarBlack = darkStatusBarBlack;
     }
 
-    public boolean isCompleteSelectRelativeTop() {
-        return isCompleteSelectRelativeTop;
-    }
-
-    public void setCompleteSelectRelativeTop(boolean completeSelectRelativeTop) {
-        isCompleteSelectRelativeTop = completeSelectRelativeTop;
-    }
-
-    public boolean isPreviewSelectRelativeBottom() {
-        return isPreviewSelectRelativeBottom;
-    }
-
-    public void setPreviewSelectRelativeBottom(boolean previewSelectRelativeBottom) {
-        isPreviewSelectRelativeBottom = previewSelectRelativeBottom;
-    }
-
     public boolean isPreviewDisplaySelectGallery() {
         return isPreviewDisplaySelectGallery;
     }
 
     public void setPreviewDisplaySelectGallery(boolean previewDisplaySelectGallery) {
         isPreviewDisplaySelectGallery = previewDisplaySelectGallery;
-    }
-
-    public int getPreviewSelectMarginRight() {
-        return previewSelectMarginRight;
-    }
-
-    public void setPreviewSelectMarginRight(int previewSelectMarginRight) {
-        this.previewSelectMarginRight = previewSelectMarginRight;
     }
 
     public String getPreviewSelectText() {
@@ -519,28 +446,12 @@ public class SelectMainStyle {
         this.adapterSelectTextSize = adapterSelectTextSize;
     }
 
-    public int getAdapterSelectClickArea() {
-        return adapterSelectClickArea;
-    }
-
-    public void setAdapterSelectClickArea(int adapterSelectClickArea) {
-        this.adapterSelectClickArea = adapterSelectClickArea;
-    }
-
     public int getAdapterSelectTextColor() {
         return adapterSelectTextColor;
     }
 
     public void setAdapterSelectTextColor(int adapterSelectTextColor) {
         this.adapterSelectTextColor = adapterSelectTextColor;
-    }
-
-    public int[] getAdapterSelectStyleGravity() {
-        return adapterSelectStyleGravity;
-    }
-
-    public void setAdapterSelectStyleGravity(int[] adapterSelectStyleGravity) {
-        this.adapterSelectStyleGravity = adapterSelectStyleGravity;
     }
 
     public int getAdapterDurationDrawableLeft() {
@@ -565,14 +476,6 @@ public class SelectMainStyle {
 
     public void setAdapterDurationTextColor(int adapterDurationTextColor) {
         this.adapterDurationTextColor = adapterDurationTextColor;
-    }
-
-    public int[] getAdapterDurationGravity() {
-        return adapterDurationGravity;
-    }
-
-    public void setAdapterDurationGravity(int[] adapterDurationGravity) {
-        this.adapterDurationGravity = adapterDurationGravity;
     }
 
     public int getAdapterDurationBackgroundResources() {
@@ -655,28 +558,12 @@ public class SelectMainStyle {
         this.adapterTagTextColor = adapterTagTextColor;
     }
 
-    public int[] getAdapterTagGravity() {
-        return adapterTagGravity;
-    }
-
-    public void setAdapterTagGravity(int[] adapterTagGravity) {
-        this.adapterTagGravity = adapterTagGravity;
-    }
-
     public int getAdapterImageEditorResources() {
         return adapterImageEditorResources;
     }
 
     public void setAdapterImageEditorResources(int adapterImageEditorResources) {
         this.adapterImageEditorResources = adapterImageEditorResources;
-    }
-
-    public int[] getAdapterImageEditorGravity() {
-        return adapterImageEditorGravity;
-    }
-
-    public void setAdapterImageEditorGravity(int[] adapterImageEditorGravity) {
-        this.adapterImageEditorGravity = adapterImageEditorGravity;
     }
 
     public int getAdapterPreviewGalleryFrameResource() {

@@ -95,28 +95,6 @@ public class BaseRecyclerMediaHolder extends RecyclerView.ViewHolder {
         if (StyleUtils.checkStyleValidity(adapterSelectBackground)) {
             tvCheck.setBackgroundResource(adapterSelectBackground);
         }
-        int[] selectStyleGravity = selectMainStyle.getAdapterSelectStyleGravity();
-        if (StyleUtils.checkArrayValidity(selectStyleGravity)) {
-            if (tvCheck.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                ((RelativeLayout.LayoutParams) tvCheck.getLayoutParams()).removeRule(RelativeLayout.ALIGN_PARENT_END);
-                for (int i : selectStyleGravity) {
-                    ((RelativeLayout.LayoutParams) tvCheck.getLayoutParams()).addRule(i);
-                }
-            }
-            if (btnCheck.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                ((RelativeLayout.LayoutParams) btnCheck.getLayoutParams()).removeRule(RelativeLayout.ALIGN_PARENT_END);
-                for (int i : selectStyleGravity) {
-                    ((RelativeLayout.LayoutParams) btnCheck.getLayoutParams()).addRule(i);
-                }
-            }
-
-            int clickArea = selectMainStyle.getAdapterSelectClickArea();
-            if (StyleUtils.checkSizeValidity(clickArea)) {
-                ViewGroup.LayoutParams clickAreaParams = btnCheck.getLayoutParams();
-                clickAreaParams.width = clickArea;
-                clickAreaParams.height = clickArea;
-            }
-        }
     }
 
     /**

@@ -23,7 +23,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.luck.picture.lib.adapter.PicturePreviewAdapter;
@@ -76,11 +75,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearSmoothScroller;
@@ -682,75 +677,13 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
             tvSelectedWord.setTextColor(selectMainStyle.getPreviewSelectTextColor());
         }
 
-        if (StyleUtils.checkSizeValidity(selectMainStyle.getPreviewSelectMarginRight())) {
-            if (tvSelected.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
-                if (tvSelected.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
-                    ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) tvSelected.getLayoutParams();
-                    layoutParams.rightMargin = selectMainStyle.getPreviewSelectMarginRight();
-                }
-            } else if (tvSelected.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvSelected.getLayoutParams();
-                layoutParams.rightMargin = selectMainStyle.getPreviewSelectMarginRight();
-            }
-        }
         completeSelectView.setCompleteSelectViewStyle();
         completeSelectView.setSelectedChange(true);
-        if (selectMainStyle.isCompleteSelectRelativeTop()) {
-            if (completeSelectView.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
-                ((ConstraintLayout.LayoutParams) completeSelectView
-                        .getLayoutParams()).topToTop = R.id.title_bar;
-                ((ConstraintLayout.LayoutParams) completeSelectView
-                        .getLayoutParams()).bottomToBottom = R.id.title_bar;
-                if (selectorConfig.isPreviewFullScreenMode) {
-                    ((ConstraintLayout.LayoutParams) completeSelectView
-                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
-                }
-            } else if (completeSelectView.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                if (selectorConfig.isPreviewFullScreenMode) {
-                    ((RelativeLayout.LayoutParams) completeSelectView
-                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
-                }
-            }
-        }
-
-        if (selectMainStyle.isPreviewSelectRelativeBottom()) {
-            if (tvSelected.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
-                ((ConstraintLayout.LayoutParams) tvSelected
-                        .getLayoutParams()).topToTop = R.id.bottom_nar_bar;
-                ((ConstraintLayout.LayoutParams) tvSelected
-                        .getLayoutParams()).bottomToBottom = R.id.bottom_nar_bar;
-
-                ((ConstraintLayout.LayoutParams) tvSelectedWord
-                        .getLayoutParams()).topToTop = R.id.bottom_nar_bar;
-                ((ConstraintLayout.LayoutParams) tvSelectedWord
-                        .getLayoutParams()).bottomToBottom = R.id.bottom_nar_bar;
-
-                ((ConstraintLayout.LayoutParams) selectClickArea
-                        .getLayoutParams()).topToTop = R.id.bottom_nar_bar;
-                ((ConstraintLayout.LayoutParams) selectClickArea
-                        .getLayoutParams()).bottomToBottom = R.id.bottom_nar_bar;
-            }
-        } else {
-            if (selectorConfig.isPreviewFullScreenMode) {
-                if (tvSelectedWord.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
-                    ((ConstraintLayout.LayoutParams) tvSelectedWord
-                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
-                } else if (tvSelectedWord.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                    ((RelativeLayout.LayoutParams) tvSelectedWord
-                            .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
-                }
-            }
-        }
         completeSelectView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean isComplete;
-                if (selectMainStyle.isCompleteSelectRelativeTop() && selectorConfig.getSelectCount() == 0) {
-                    isComplete = confirmSelect(mData.get(viewPager.getCurrentItem()), false)
-                            == SelectedManager.ADD_SUCCESS;
-                } else {
-                    isComplete = selectorConfig.getSelectCount() > 0;
-                }
+                isComplete = selectorConfig.getSelectCount() > 0;
                 if (selectorConfig.isEmptyResultReturn && selectorConfig.getSelectCount() == 0) {
                     onExitPictureSelector();
                 } else {
@@ -831,15 +764,6 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
             }
             group.addView(mGalleryRecycle);
 
-            ViewGroup.LayoutParams layoutParams = mGalleryRecycle.getLayoutParams();
-            if (layoutParams instanceof ConstraintLayout.LayoutParams) {
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) layoutParams;
-                params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-                params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                params.bottomToTop = R.id.bottom_nar_bar;
-                params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
-                params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-            }
             WrapContentLinearLayoutManager layoutManager = new WrapContentLinearLayoutManager(getContext()) {
                 @Override
                 public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {

@@ -17,9 +17,6 @@ public class MagicalViewWrapper {
     public MagicalViewWrapper(View view) {
         this.viewWrapper = view;
         params = (ViewGroup.MarginLayoutParams) viewWrapper.getLayoutParams();
-        if (params instanceof LinearLayout.LayoutParams) {
-            ((LinearLayout.LayoutParams) params).gravity = Gravity.START;
-        }
     }
 
     public int getWidth() {

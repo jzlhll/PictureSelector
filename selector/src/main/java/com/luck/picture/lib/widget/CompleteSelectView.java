@@ -169,7 +169,7 @@ public class CompleteSelectView extends LinearLayout {
                 tvSelectNum.setVisibility(GONE);
             }
         } else {
-            if (isPreview && selectMainStyle.isCompleteSelectRelativeTop()) {
+            if (isPreview && false) { //todo check
                 setEnabled(true);
                 int selectBackground = selectMainStyle.getSelectBackgroundResources();
                 if (StyleUtils.checkStyleValidity(selectBackground)) {

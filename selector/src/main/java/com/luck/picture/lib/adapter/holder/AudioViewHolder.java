@@ -42,16 +42,6 @@ public class AudioViewHolder extends BaseRecyclerMediaHolder {
         if (StyleUtils.checkStyleValidity(shadowBackground)) {
             tvDuration.setBackgroundResource(shadowBackground);
         }
-
-        int[] durationGravity = adapterStyle.getAdapterDurationGravity();
-        if (StyleUtils.checkArrayValidity(durationGravity)) {
-            if (tvDuration.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                ((RelativeLayout.LayoutParams) tvDuration.getLayoutParams()).removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                for (int i : durationGravity) {
-                    ((RelativeLayout.LayoutParams) tvDuration.getLayoutParams()).addRule(i);
-                }
-            }
-        }
     }
 
     @Override

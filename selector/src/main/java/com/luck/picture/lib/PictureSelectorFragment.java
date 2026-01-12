@@ -316,24 +316,6 @@ public class PictureSelectorFragment extends PictureCommonFragment
         } else {
             completeSelectView.setCompleteSelectViewStyle();
             completeSelectView.setSelectedChange(false);
-            SelectMainStyle selectMainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
-            if (selectMainStyle.isCompleteSelectRelativeTop()) {
-                if (completeSelectView.getLayoutParams() instanceof ConstraintLayout.LayoutParams) {
-                    ((ConstraintLayout.LayoutParams)
-                            completeSelectView.getLayoutParams()).topToTop = R.id.title_bar;
-                    ((ConstraintLayout.LayoutParams)
-                            completeSelectView.getLayoutParams()).bottomToBottom = R.id.title_bar;
-                    if (selectorConfig.isPreviewFullScreenMode) {
-                        ((ConstraintLayout.LayoutParams) completeSelectView
-                                .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
-                    }
-                } else if (completeSelectView.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                    if (selectorConfig.isPreviewFullScreenMode) {
-                        ((RelativeLayout.LayoutParams) completeSelectView
-                                .getLayoutParams()).topMargin = ScreenConst.instance.statusBarHeight;
-                    }
-                }
-            }
             completeSelectView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

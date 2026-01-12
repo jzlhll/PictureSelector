@@ -32,26 +32,7 @@ public class ImageViewHolder extends BaseRecyclerMediaHolder {
         if (StyleUtils.checkStyleValidity(imageEditorRes)) {
             ivEditor.setImageResource(imageEditorRes);
         }
-        int[] editorGravity = adapterStyle.getAdapterImageEditorGravity();
-        if (StyleUtils.checkArrayValidity(editorGravity)) {
-            if (ivEditor.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                ((RelativeLayout.LayoutParams) ivEditor.getLayoutParams()).removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                for (int i : editorGravity) {
-                    ((RelativeLayout.LayoutParams) ivEditor.getLayoutParams()).addRule(i);
-                }
-            }
-        }
 
-        int[] tagGravity = adapterStyle.getAdapterTagGravity();
-        if (StyleUtils.checkArrayValidity(tagGravity)) {
-            if (tvMediaTag.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
-                ((RelativeLayout.LayoutParams) tvMediaTag.getLayoutParams()).removeRule(RelativeLayout.ALIGN_PARENT_END);
-                ((RelativeLayout.LayoutParams) tvMediaTag.getLayoutParams()).removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                for (int i : tagGravity) {
-                    ((RelativeLayout.LayoutParams) tvMediaTag.getLayoutParams()).addRule(i);
-                }
-            }
-        }
         int background = adapterStyle.getAdapterTagBackgroundResources();
         if (StyleUtils.checkStyleValidity(background)) {
             tvMediaTag.setBackgroundResource(background);

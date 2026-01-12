@@ -2154,13 +2154,10 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
             numberSelectMainStyle.setPreviewSelectText(com.luck.picture.lib.R.string.ps_select);
             numberSelectMainStyle.setPreviewSelectTextSize(14);
             numberSelectMainStyle.setPreviewSelectTextColor(ContextCompat.getColor(getContext(), com.luck.picture.lib.R.color.ps_color_white));
-            numberSelectMainStyle.setPreviewSelectMarginRight(DensityUtil.dip2px(getContext(), 6));
             numberSelectMainStyle.setSelectBackgroundResources(com.luck.picture.lib.R.drawable.ps_select_complete_bg);
             numberSelectMainStyle.setSelectText(com.luck.picture.lib.R.string.ps_send_num);
             numberSelectMainStyle.setSelectTextColor(ContextCompat.getColor(getContext(), com.luck.picture.lib.R.color.ps_color_white));
             numberSelectMainStyle.setMainListBackgroundColor(ContextCompat.getColor(getContext(), com.luck.picture.lib.R.color.ps_color_black));
-            numberSelectMainStyle.setCompleteSelectRelativeTop(true);
-            numberSelectMainStyle.setPreviewSelectRelativeBottom(true);
             numberSelectMainStyle.setAdapterItemIncludeEdge(false);
 
             // 头部TitleBar 风格
