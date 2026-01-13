@@ -2076,7 +2076,7 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
             selectorStyle.setTitleBarStyle(blueTitleBarStyle);
             selectorStyle.setBottomBarStyle(numberBlueBottomNavBarStyle);
             selectorStyle.setSelectMainStyle(numberBlueSelectMainStyle);
-        } else if (checkedId == R.id.rb_we_chat_style) {// 主体风格
+        } else if (checkedId == R.id.rb_we_chat_style) {// 微信风格
             SelectMainStyle numberSelectMainStyle = new SelectMainStyle();
             numberSelectMainStyle.setSelectNumberStyle(true);
             numberSelectMainStyle.setPreviewSelectNumberStyle(false);

@@ -75,6 +75,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -655,13 +656,15 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
     protected void initPreviewSelectGallery(ViewGroup group) {
         SelectMainStyle selectMainStyle = selectorConfig.selectorStyle.getSelectMainStyle();
         if (selectMainStyle.isPreviewDisplaySelectGallery()) {
-            mGalleryRecycle = new RecyclerView(getContext());
+            if (mGalleryRecycle == null) {
+                mGalleryRecycle = getView().findViewById(R.id.galleryRcv);
+                mGalleryRecycle.setVisibility(View.VISIBLE);
+            }
             if (StyleUtils.checkStyleValidity(selectMainStyle.getAdapterPreviewGalleryBackgroundResource())) {
                 mGalleryRecycle.setBackgroundResource(selectMainStyle.getAdapterPreviewGalleryBackgroundResource());
             } else {
                 mGalleryRecycle.setBackgroundResource(R.drawable.ps_preview_gallery_bg);
             }
-            group.addView(mGalleryRecycle);
 
             WrapContentLinearLayoutManager layoutManager = new WrapContentLinearLayoutManager(getContext()) {
                 @Override

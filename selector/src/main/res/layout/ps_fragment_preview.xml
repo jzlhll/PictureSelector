@@ -38,5 +38,10 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_height="48dp" />
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/galleryRcv"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nar_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

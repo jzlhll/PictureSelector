@@ -8,7 +8,7 @@
             <solid android:color="@color/ps_color_half_grey" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/ps_color_66" />
+                android:color="@color/ps_color_44" />
             <padding
                 android:left="0dp"
                 android:right="0dp" />
