@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.RelativeLayout"
+    tools:background="#999999"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -16,9 +18,10 @@
         android:layout_below="@id/top_status_bar">
 
         <ImageView
+            android:layout_marginStart="5dp"
             android:id="@+id/ps_iv_left_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="42dp"
+            android:layout_height="32dp"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
             android:src="@drawable/ps_ic_back" />
@@ -66,18 +69,6 @@
             android:layout_height="match_parent"
             android:layout_alignStart="@id/ps_rl_album_bg"
             android:layout_alignEnd="@id/ps_rl_album_bg" />
-
-        <com.luck.picture.lib.widget.MediumBoldTextView
-            android:id="@+id/ps_tv_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ps_cancel_default_bg"
-            android:gravity="center"
-            android:text="@string/ps_cancel"
-            android:textColor="@color/ps_color_white"
-            android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ps_select_all"

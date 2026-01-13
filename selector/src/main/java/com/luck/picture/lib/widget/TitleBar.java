@@ -30,84 +30,17 @@ import com.luck.picture.lib.utils.StyleUtils;
  * @date：2021/11/17 10:45 上午
  * @describe：TitleBar
  */
-public class TitleBar extends RelativeLayout implements View.OnClickListener {
+public abstract class TitleBar extends RelativeLayout implements View.OnClickListener {
 
     protected RelativeLayout rlAlbumBg;
     protected ImageView ivLeftBack;
     protected ImageView ivArrow;
     protected MarqueeTextView tvTitle;
-    protected TextView tvCancel;
     protected View titleBarLine;
     protected View viewAlbumClickArea;
     protected SelectorConfig config;
     protected View viewTopStatusBar;
     protected RelativeLayout titleBarLayout;
-
-    private ImageView selectAllImage;
-
-    private int mCurrentNum = 0;
-
-    private boolean mIsAllSelected = false;
-
-    private OnSelectAllListener mOnSelectAllListener;
-
-    /**
-     * 不论哪个被调用，你需要调用[setCurrentNum]来刷新最新状态。
-     */
-    public interface OnSelectAllListener {
-        void onSelectAll();
-        void onCancelSelectAll();
-    }
-
-    /**
-     * 设置了这个全选，就激活了全选模式，取消了cancel按钮。
-     */
-    public void setOnSelectAllListener(@NonNull OnSelectAllListener listener) {
-        mOnSelectAllListener = listener;
-        selectAllImage = findViewById(R.id.ps_select_all);
-        selectAllImage.setVisibility(View.VISIBLE);
-        selectAllImage.setOnClickListener((OnClickListener) v -> {
-            if (mIsAllSelected) {
-                mOnSelectAllListener.onCancelSelectAll();
-            } else {
-                mOnSelectAllListener.onSelectAll();
-            }
-        });
-
-        tvCancel.setOnClickListener(null);
-        tvCancel.setVisibility(View.GONE);
-    }
-
-    public void resetToNoneSelect(String from) {
-        if (mOnSelectAllListener == null) {
-            return;
-        }
-        mIsAllSelected = false;
-//            selectAllImage.contentDescription = context.getString(R.string.select_all)
-        selectAllImage.setImageResource(R.drawable.ps_select_all);
-        Log.d(PictureSelectorFragment.TAG, "allan💗 " + from + "reset to None Select");
-    }
-
-    public void setSelectedChange() {
-        if (mOnSelectAllListener == null) {
-            return;
-        }
-        var selectCount = config.getSelectCount();
-        Log.d(PictureSelectorFragment.TAG, "allan💗 set Selected Change " + selectCount);
-        mCurrentNum = selectCount;
-        if (mIsAllSelected) {
-            mIsAllSelected = false;
-//            selectAllImage.contentDescription = context.getString(R.string.select_all)
-            selectAllImage.setImageResource(R.drawable.ps_select_all);
-        } else {
-            mIsAllSelected = true;
-            selectAllImage.setImageResource(R.drawable.ps_select_cancel);
-        }
-    }
-
-    public TextView getTitleCancelView() {
-        return tvCancel;
-    }
 
     public TitleBar(Context context) {
         super(context);
@@ -125,7 +58,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
     }
 
     protected void init() {
-        inflateLayout();
+        LayoutInflater.from(getContext()).inflate(getLayoutId(), this);
         setClickable(true);
         setFocusable(true);
         config = SelectorProviders.getInstance().getSelectorConfig();
@@ -136,10 +69,8 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         viewAlbumClickArea = findViewById(R.id.ps_rl_album_click);
         tvTitle = findViewById(R.id.ps_tv_title);
         ivArrow = findViewById(R.id.ps_iv_arrow);
-        tvCancel = findViewById(R.id.ps_tv_cancel);
         titleBarLine = findViewById(R.id.title_bar_line);
         ivLeftBack.setOnClickListener(this);
-        tvCancel.setOnClickListener(this);
         rlAlbumBg.setOnClickListener(this);
         titleBarLayout.setOnClickListener(this);
         viewAlbumClickArea.setOnClickListener(this);
@@ -152,9 +83,7 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         }
     }
 
-    protected void inflateLayout() {
-        LayoutInflater.from(getContext()).inflate(R.layout.ps_title_bar, this);
-    }
+    abstract int getLayoutId();
 
     protected void handleLayoutUI() {
 
@@ -247,35 +176,12 @@ public class TitleBar extends RelativeLayout implements View.OnClickListener {
         if (StyleUtils.checkStyleValidity(albumBackgroundRes)) {
             rlAlbumBg.setBackgroundResource(albumBackgroundRes);
         }
-
-        if (titleBarStyle.isHideCancelButton() || mOnSelectAllListener != null) {
-            tvCancel.setVisibility(GONE);
-        } else {
-            tvCancel.setVisibility(VISIBLE);
-            int titleCancelBackgroundResource = titleBarStyle.getTitleCancelBackgroundResource();
-            if (StyleUtils.checkStyleValidity(titleCancelBackgroundResource)) {
-                tvCancel.setBackgroundResource(titleCancelBackgroundResource);
-            }
-            String titleCancelText = StyleUtils.checkStyleValidity(titleBarStyle.getTitleCancelTextResId())
-                    ? getContext().getString(titleBarStyle.getTitleCancelTextResId()) : titleBarStyle.getTitleCancelText();
-            if (StyleUtils.checkTextValidity(titleCancelText)) {
-                tvCancel.setText(titleCancelText);
-            }
-            int titleCancelTextColor = titleBarStyle.getTitleCancelTextColor();
-            if (StyleUtils.checkStyleValidity(titleCancelTextColor)) {
-                tvCancel.setTextColor(titleCancelTextColor);
-            }
-            int titleCancelTextSize = titleBarStyle.getTitleCancelTextSize();
-            if (StyleUtils.checkSizeValidity(titleCancelTextSize)) {
-                tvCancel.setTextSize(titleCancelTextSize);
-            }
-        }
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.ps_iv_left_back || id == R.id.ps_tv_cancel) {
+        if (id == R.id.ps_iv_left_back) {
             if (titleBarListener != null) {
                 titleBarListener.onBackPressed();
             }

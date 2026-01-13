@@ -62,44 +62,9 @@ public class TitleBarStyle {
     private int titleAlbumBackgroundResource;
 
     /**
-     * 标题栏位置居左
-     */
-    private boolean isAlbumTitleRelativeLeft;
-
-
-    /**
      * 标题栏右边向上图标
      */
     private int titleDrawableRightResource;
-
-    /**
-     * 标题栏右边取消按钮背景
-     */
-    private int titleCancelBackgroundResource;
-
-    /**
-     * 是否隐藏取消按钮
-     */
-    private boolean isHideCancelButton;
-
-    /**
-     * 标题栏右边默认文本
-     */
-    private String titleCancelText;
-
-    /**
-     * 标题栏右边默认文本
-     */
-    private int titleCancelTextResId;
-
-    /**
-     * 标题栏右边文本字体大小
-     */
-    private int titleCancelTextSize;
-    /**
-     * 标题栏右边文本字体色值
-     */
-    private int titleCancelTextColor;
 
     /**
      * 标题栏底部线条色值
@@ -202,68 +167,12 @@ public class TitleBarStyle {
         this.titleAlbumBackgroundResource = titleAlbumBackgroundResource;
     }
 
-    public boolean isAlbumTitleRelativeLeft() {
-        return isAlbumTitleRelativeLeft;
-    }
-
-    public void setAlbumTitleRelativeLeft(boolean albumTitleRelativeLeft) {
-        isAlbumTitleRelativeLeft = albumTitleRelativeLeft;
-    }
-
     public int getTitleDrawableRightResource() {
         return titleDrawableRightResource;
     }
 
     public void setTitleDrawableRightResource(int titleDrawableRightResource) {
         this.titleDrawableRightResource = titleDrawableRightResource;
-    }
-
-    public int getTitleCancelBackgroundResource() {
-        return titleCancelBackgroundResource;
-    }
-
-    public void setTitleCancelBackgroundResource(int titleCancelBackgroundResource) {
-        this.titleCancelBackgroundResource = titleCancelBackgroundResource;
-    }
-
-    public boolean isHideCancelButton() {
-        return isHideCancelButton;
-    }
-
-    public void setHideCancelButton(boolean hideCancelButton) {
-        isHideCancelButton = hideCancelButton;
-    }
-
-    public String getTitleCancelText() {
-        return titleCancelText;
-    }
-
-    public void setTitleCancelText(String titleCancelText) {
-        this.titleCancelText = titleCancelText;
-    }
-
-    public int getTitleCancelTextResId() {
-        return titleCancelTextResId;
-    }
-
-    public void setTitleCancelText(int resId) {
-        this.titleCancelTextResId = resId;
-    }
-
-    public int getTitleCancelTextSize() {
-        return titleCancelTextSize;
-    }
-
-    public void setTitleCancelTextSize(int titleCancelTextSize) {
-        this.titleCancelTextSize = titleCancelTextSize;
-    }
-
-    public int getTitleCancelTextColor() {
-        return titleCancelTextColor;
-    }
-
-    public void setTitleCancelTextColor(int titleCancelTextColor) {
-        this.titleCancelTextColor = titleCancelTextColor;
     }
 
     public int getTitleBarLineColor() {

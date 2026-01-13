@@ -2,16 +2,10 @@ package com.luck.picture.lib.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.luck.picture.lib.R;
-import com.luck.picture.lib.config.SelectorProviders;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.manager.SelectedManager;
 import com.luck.picture.lib.style.TitleBarStyle;
 import com.luck.picture.lib.utils.StyleUtils;
 
@@ -20,17 +14,17 @@ import com.luck.picture.lib.utils.StyleUtils;
  * @date：2021/11/19 4:38 下午
  * @describe：PreviewTitleBar
  */
-public class PreviewTitleBar extends TitleBar {
+public class TitlePreviewBar extends TitleBar {
 
-    public PreviewTitleBar(Context context) {
+    public TitlePreviewBar(Context context) {
         super(context);
     }
 
-    public PreviewTitleBar(Context context, AttributeSet attrs) {
+    public TitlePreviewBar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public PreviewTitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TitlePreviewBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -44,8 +38,9 @@ public class PreviewTitleBar extends TitleBar {
         selectedClick = runnable;
     }
 
-    protected void inflateLayout() {
-        LayoutInflater.from(getContext()).inflate(R.layout.ps_title_bar_preview, this);
+    @Override
+    int getLayoutId() {
+        return R.layout.ps_title_bar_preview;
     }
 
     @Override
@@ -62,11 +57,10 @@ public class PreviewTitleBar extends TitleBar {
         }
         rlAlbumBg.setOnClickListener(null);
         viewAlbumClickArea.setOnClickListener(null);
-        RelativeLayout.LayoutParams layoutParams = (LayoutParams) rlAlbumBg.getLayoutParams();
-        layoutParams.removeRule(RelativeLayout.END_OF);
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+//        RelativeLayout.LayoutParams layoutParams = (LayoutParams) rlAlbumBg.getLayoutParams();
+//        layoutParams.removeRule(RelativeLayout.END_OF);
+//        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         rlAlbumBg.setBackgroundResource(R.drawable.ps_ic_trans_1px);
-        tvCancel.setVisibility(GONE);
         ivArrow.setVisibility(GONE);
         viewAlbumClickArea.setVisibility(GONE);
     }

@@ -23,7 +23,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.luck.picture.lib.adapter.PicturePreviewAdapter;
 import com.luck.picture.lib.adapter.holder.BasePreviewHolder;
@@ -31,7 +30,6 @@ import com.luck.picture.lib.adapter.holder.PreviewGalleryAdapter;
 import com.luck.picture.lib.adapter.holder.PreviewVideoHolder;
 import com.luck.picture.lib.bases.ScreenConst;
 import com.luck.picture.lib.basic.PictureCommonFragment;
-import com.luck.picture.lib.basic.PictureMediaScannerConnection;
 import com.luck.picture.lib.config.Crop;
 import com.luck.picture.lib.config.InjectResourceSource;
 import com.luck.picture.lib.config.PictureConfig;
@@ -40,7 +38,6 @@ import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.config.SelectModeConfig;
 import com.luck.picture.lib.decoration.HorizontalItemDecoration;
 import com.luck.picture.lib.decoration.WrapContentLinearLayoutManager;
-import com.luck.picture.lib.dialog.PictureCommonDialog;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.entity.MediaExtraInfo;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
@@ -57,16 +54,13 @@ import com.luck.picture.lib.style.PictureWindowAnimationStyle;
 import com.luck.picture.lib.style.SelectMainStyle;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
 import com.luck.picture.lib.utils.DensityUtil;
-import com.luck.picture.lib.utils.DownloadFileUtils;
 import com.luck.picture.lib.utils.MediaUtils;
 import com.luck.picture.lib.utils.SdkVersionUtils;
 import com.luck.picture.lib.utils.StyleUtils;
-import com.luck.picture.lib.utils.ToastUtils;
 import com.luck.picture.lib.utils.ValueOf;
 import com.luck.picture.lib.widget.BottomNavBar;
-import com.luck.picture.lib.widget.CompleteSelectView;
 import com.luck.picture.lib.widget.PreviewBottomNavBar;
-import com.luck.picture.lib.widget.PreviewTitleBar;
+import com.luck.picture.lib.widget.TitlePreviewBar;
 import com.luck.picture.lib.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -75,7 +69,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -103,7 +96,7 @@ public class PictureSelectorPreviewFragment extends PictureCommonFragment {
 
     protected PreviewBottomNavBar bottomNarBar;
 
-    protected PreviewTitleBar titleBar;
+    protected TitlePreviewBar titleBar;
 
     /**
      * if there more

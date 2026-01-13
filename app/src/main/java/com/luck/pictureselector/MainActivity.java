@@ -2022,7 +2022,6 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
             whiteTitleBarStyle.setTitleDrawableRightResource(R.drawable.ic_orange_arrow_down);
             whiteTitleBarStyle.setTitleLeftBackResource(com.luck.picture.lib.R.drawable.ps_ic_black_back);
             whiteTitleBarStyle.setTitleTextColor(ContextCompat.getColor(getContext(), com.luck.picture.lib.R.color.ps_color_black));
-            whiteTitleBarStyle.setTitleCancelTextColor(ContextCompat.getColor(getContext(), com.luck.picture.lib.R.color.ps_color_53575e));
             whiteTitleBarStyle.setDisplayTitleBarLine(true);
 
             BottomNavBarStyle whiteBottomNavBarStyle = new BottomNavBarStyle();
@@ -2099,8 +2098,6 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
 
             // 头部TitleBar 风格
             TitleBarStyle numberTitleBarStyle = new TitleBarStyle();
-            numberTitleBarStyle.setHideCancelButton(true);
-            numberTitleBarStyle.setAlbumTitleRelativeLeft(true);
             if (cb_only_dir.isChecked()) {
                 numberTitleBarStyle.setTitleAlbumBackgroundResource(R.drawable.ps_demo_only_album_bg);
             } else {

@@ -76,6 +76,7 @@ import com.luck.picture.lib.widget.RecyclerPreloadView;
 import com.luck.picture.lib.widget.SlideSelectTouchListener;
 import com.luck.picture.lib.widget.SlideSelectionHandler;
 import com.luck.picture.lib.widget.TitleBar;
+import com.luck.picture.lib.widget.TitleSelectorBar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
     private static int SELECT_ANIM_DURATION = 135;
     private RecyclerPreloadView mRecycler;
     private TextView tvDataEmpty;
-    private TitleBar titleBar;
+    private TitleSelectorBar titleBar;
     private BottomNavBar bottomNarBar;
     private TextView tvCurrentDataTime;
     private long intervalClickTime = 0;
@@ -268,7 +269,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
 
     private void initSelectAllBars() {
         if (selectorConfig.maxSelectNum == Integer.MAX_VALUE) {
-            titleBar.setOnSelectAllListener(new TitleBar.OnSelectAllListener() {
+            titleBar.setOnSelectAllListener(new TitleSelectorBar.OnSelectAllListener() {
                 @Override
                 public void onSelectAll() {
                     confirmSelectAlbumAllAdd(mAdapter.getData());
@@ -305,7 +306,6 @@ public class PictureSelectorFragment extends PictureCommonFragment
      */
     private void initComplete() {
         if (selectorConfig.selectionMode == SelectModeConfig.SINGLE && selectorConfig.isDirectReturnSingle) {
-            selectorConfig.selectorStyle.getTitleBarStyle().setHideCancelButton(false);
             //allan modify这里不合理，会让preview也显示delete
             //titleBar.getTitleCancelView().setVisibility(View.VISIBLE);
             bottomNarBar.completeSelectView.setVisibility(View.GONE);
