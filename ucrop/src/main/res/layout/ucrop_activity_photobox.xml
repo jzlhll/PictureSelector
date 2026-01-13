@@ -31,6 +31,24 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:id="@+id/bottomBarView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:layout_height="24dp"
+        android:background="@color/ucrop_color_widget_background"
+        android:layout_alignParentBottom="true" />
+
+    <FrameLayout
+        android:id="@+id/controls_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBarView"
+        tools:layout_height="32dp"
+        tools:background="#44ff8800"
+        tools:visibility="visible"
+        android:visibility="gone" />
+
     <FrameLayout
         android:id="@+id/ucrop_frame"
         android:layout_width="match_parent"
@@ -56,17 +74,4 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/controls_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone" />
-
-    <View
-        android:id="@+id/bottomBarView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent" />
 </RelativeLayout>

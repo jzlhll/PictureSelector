@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'maven-publish'
+    id("com.vanniktech.maven.publish") version "0.35.0"
 }
 
 android {
@@ -41,4 +42,39 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${cfgs.version_recyclerview}"
     implementation "com.google.code.gson:gson:${cfgs.gson}"
     implementation 'androidx.core:core-ktx:1.13.1'
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+}
+
+mavenPublishing {
+    coordinates("io.github.jzlhll", "pictureselector_ucrop", "3.16.4")
+
+    pom {
+        name = "pictureselector_ucrop"
+        description = "This is my android project picture selector."
+        inceptionYear = "2026"
+        url = "https://github.com/jzlhll/PictureSelector"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "jzlhll"
+                name = "jzlhll"
+                url = "https://github.com/jzlhll/"
+            }
+        }
+        scm {
+            url = "https://github.com/jzlhll/PictureSelector"
+            connection = "scm:git:git://github.com/jzlhll/PictureSelector.git"
+            developerConnection = "scm:git:ssh://git@github.com/jzlhll/PictureSelector.git"
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.luck.pictureselector;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.luck.picture.lib.interfaces.OnResultCallbackListener;
 import com.luck.picture.lib.style.PictureSelectorStyle;
 import com.luck.picture.lib.style.SelectMainStyle;
 import com.luck.picture.lib.utils.MediaUtils;
-import com.yalantis.ucrop.statusbar.ImmersiveManager;
+import com.yalantis.ucrop.bases.AbsImmersiveActivity;
 
 import java.util.ArrayList;
 
@@ -26,12 +27,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author：luck
  * @date：2021/12/20 1:40 下午
  * @describe：InjectFragmentActivity
  */
-public class InjectFragmentActivity extends AppCompatActivity implements IBridgePictureBehavior {
+public class InjectFragmentActivity extends AbsImmersiveActivity implements IBridgePictureBehavior {
     private final static String TAG = "PictureSelectorTag";
     private TextView tvResult;
     private PictureSelectorStyle pictureSelectorStyle = new PictureSelectorStyle();
@@ -40,8 +43,6 @@ public class InjectFragmentActivity extends AppCompatActivity implements IBridge
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int navigationBarColor = ContextCompat.getColor(this, com.luck.picture.lib.R.color.ps_color_grey);
-        int color = ContextCompat.getColor(this, R.color.app_color_white);
-        ImmersiveManager.immersiveAboveAPI23(this, color, navigationBarColor, true);
         setContentView(R.layout.activity_inject_fragment);
         tvResult = findViewById(R.id.tv_result);
         SelectMainStyle bottomNavBarStyle = pictureSelectorStyle.getSelectMainStyle();
@@ -147,4 +148,8 @@ public class InjectFragmentActivity extends AppCompatActivity implements IBridge
     private void setTranslucentStatusBar() {
     }
 
+    @Override
+    public void immersive(@NotNull Activity activity, @NotNull View root, int statusBarHeight, int navBarHeight) {
+
+    }
 }

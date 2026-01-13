@@ -14,14 +14,14 @@ repositories {
 }
 
 dependencies {
-  // PictureSelector basic (Necessary) 我只修改了该模块，其他暂时不编译，不影响
-  implementation 'io.github.jzlhll:pictureselector:3.16.3'
-
-  // image compress library (Not necessary)
-  implementation 'com.github.buhuiming.PictureSelector:compress:3.15.1'
+  // PictureSelector basic (Necessary) 我修改了两个模块，按需使用
+  implementation 'io.github.jzlhll:pictureselector:3.16.4'
 
   // uCrop library (Not necessary)
-  implementation 'com.github.buhuiming.PictureSelector:ucrop:3.15.1'
+  implementation 'io.github.jzlhll:pictureselector_urop:3.16.4'
+    
+  // image compress library (Not necessary)
+  implementation 'com.github.buhuiming.PictureSelector:compress:3.15.1'
 
   // simple camerax library (Not necessary)
   implementation 'com.github.buhuiming.PictureSelector:camerax:3.15.1'
@@ -51,6 +51,7 @@ dependencies {
 //.setCompressEngine(getCompressFileEngine())
 
 //设置maxSelectNum为int最大值，切换成全选模式
+
 .setMaxSelectNum(Integer.MAX_VALUE)
 ```
 右上角就有全选模式和取消全选功能，用于做大批量相册导入导出的全选操作。

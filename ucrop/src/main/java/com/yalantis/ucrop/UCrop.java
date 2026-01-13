@@ -337,8 +337,6 @@ public class UCrop {
 
         public static final String EXTRA_CROP_FORBID_SKIP = EXTRA_PREFIX + ".ForbidSkipCrop";
 
-        public static final String EXTRA_DARK_STATUS_BAR_BLACK = EXTRA_PREFIX + ".isDarkStatusBarBlack";
-
         public static final String EXTRA_DRAG_IMAGES = EXTRA_PREFIX + ".isDragImages";
 
         public static final String EXTRA_CROP_CUSTOM_LOADER_BITMAP = EXTRA_PREFIX + ".CustomLoaderCropBitmap";
@@ -370,6 +368,7 @@ public class UCrop {
 
         public static final String EXTRA_TOOL_BAR_COLOR = EXTRA_PREFIX + ".ToolbarColor";
         public static final String EXTRA_STATUS_BAR_COLOR = EXTRA_PREFIX + ".StatusBarColor";
+        public static final String EXTRA_STATUS_BAR_TEXT_IS_DARK = EXTRA_PREFIX + ".StatusBarTextIsDark";
         public static final String EXTRA_UCROP_COLOR_CONTROLS_WIDGET_ACTIVE = EXTRA_PREFIX + ".UcropColorControlsWidgetActive";
 
         public static final String EXTRA_UCROP_WIDGET_COLOR_TOOLBAR = EXTRA_PREFIX + ".UcropToolbarWidgetColor";
@@ -610,12 +609,11 @@ public class UCrop {
             mOptionBundle.putInt(EXTRA_STATUS_BAR_COLOR, color);
         }
 
-
         /**
-         * @param Is the font of the status bar black
+         * for new immersive, set statusBar text color is Light or dark
          */
-        public void isDarkStatusBarBlack(boolean isDarkStatusBarBlack) {
-            mOptionBundle.putBoolean(EXTRA_DARK_STATUS_BAR_BLACK, isDarkStatusBarBlack);
+        public void setExtraStatusBarTextIsDark(boolean isDark) {
+            mOptionBundle.putBoolean(EXTRA_STATUS_BAR_TEXT_IS_DARK, isDark);
         }
 
         /**

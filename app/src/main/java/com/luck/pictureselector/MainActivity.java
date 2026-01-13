@@ -124,7 +124,6 @@ import com.luck.pictureselector.listener.OnItemLongClickListener;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropImageEngine;
 import com.yalantis.ucrop.model.AspectRatio;
-import com.yalantis.ucrop.statusbar.ImmersiveManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -1640,9 +1639,8 @@ public class MainActivity extends AbsImmersiveActivity implements IBridgePicture
         options.setMaxScaleMultiplier(100);
         if (selectorStyle != null && selectorStyle.getSelectMainStyle().getStatusBarColor() != 0) {
             SelectMainStyle mainStyle = selectorStyle.getSelectMainStyle();
-            boolean isDarkStatusBarBlack = mainStyle.isDarkStatusBarBlack();
             int statusBarColor = mainStyle.getStatusBarColor();
-            options.isDarkStatusBarBlack(isDarkStatusBarBlack);
+            options.setExtraStatusBarTextIsDark(false);
             if (StyleUtils.checkStyleValidity(statusBarColor)) {
                 options.setStatusBarColor(statusBarColor);
                 options.setToolbarColor(statusBarColor);

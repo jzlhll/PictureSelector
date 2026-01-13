@@ -17,16 +17,4 @@ public class DensityUtil {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    /**
-     * 获取状态栏高度
-     */
-    public static int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result == 0 ? dip2px(context, 26) : result;
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.yalantis.ucrop;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Animatable;
@@ -14,7 +15,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -22,13 +22,15 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yalantis.ucrop.bases.AbsImmersiveActivity;
+import com.yalantis.ucrop.bases.UtilKt;
 import com.yalantis.ucrop.decoration.GridSpacingItemDecoration;
 import com.yalantis.ucrop.model.AspectRatio;
 import com.yalantis.ucrop.model.CustomIntentKey;
-import com.yalantis.ucrop.statusbar.ImmersiveManager;
 import com.yalantis.ucrop.util.DensityUtil;
 import com.yalantis.ucrop.util.FileUtils;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,7 +46,6 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
@@ -63,7 +64,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @date：2021/11/28 7:59 下午
  * @describe：UCropMultipleActivity
  */
-public class UCropMultipleActivity extends AppCompatActivity implements UCropFragmentCallback {
+public class UCropMultipleActivity extends AbsImmersiveActivity implements UCropFragmentCallback {
     private String mToolbarTitle;
     private int mToolbarTitleSize;
     // Enables dynamic coloring
@@ -95,30 +96,9 @@ public class UCropMultipleActivity extends AppCompatActivity implements UCropFra
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        immersive();
         setContentView(R.layout.ucrop_activity_multiple);
-        immersiveAboveAPI35();
         setupViews(getIntent());
         initCropFragments(getIntent());
-    }
-
-    private void immersive() {
-        Intent intent = getIntent();
-        boolean isDarkStatusBarBlack = intent.getBooleanExtra(UCrop.Options.EXTRA_DARK_STATUS_BAR_BLACK, false);
-        mStatusBarColor = intent.getIntExtra(UCrop.Options.EXTRA_STATUS_BAR_COLOR, ContextCompat.getColor(this, R.color.ucrop_color_statusbar));
-        int galleryBarBackground = getIntent().getIntExtra(UCrop.Options.EXTRA_GALLERY_BAR_BACKGROUND,
-                ContextCompat.getColor(this, R.color.ucrop_color_widget_background));
-        ImmersiveManager.immersiveAboveAPI23(this, mStatusBarColor, galleryBarBackground, isDarkStatusBarBlack);
-    }
-
-    private void immersiveAboveAPI35() {
-        Intent intent = getIntent();
-        boolean isDarkStatusBarBlack = intent.getBooleanExtra(UCrop.Options.EXTRA_DARK_STATUS_BAR_BLACK, false);
-        mStatusBarColor = intent.getIntExtra(UCrop.Options.EXTRA_STATUS_BAR_COLOR, ContextCompat.getColor(this, R.color.ucrop_color_statusbar));
-        ImmersiveManager.setDecorFitsSystemWindows(this, false, isDarkStatusBarBlack);
-        ViewGroup.LayoutParams params = findViewById(R.id.barView).getLayoutParams();
-        params.height = DensityUtil.getStatusBarHeight(this);
-        findViewById(R.id.barView).setBackgroundColor(mStatusBarColor);
     }
 
     private void initCropFragments(Intent intent) {
@@ -312,6 +292,9 @@ public class UCropMultipleActivity extends AppCompatActivity implements UCropFra
         isForbidCropGifWebp = intent.getBooleanExtra(UCrop.Options.EXTRA_CROP_FORBID_GIF_WEBP, false);
         outputCropFileName = intent.getStringExtra(UCrop.Options.EXTRA_CROP_OUTPUT_FILE_NAME);
         mStatusBarColor = intent.getIntExtra(UCrop.Options.EXTRA_STATUS_BAR_COLOR, ContextCompat.getColor(this, R.color.ucrop_color_statusbar));
+        var mStatusBarIsDark = intent.getBooleanExtra(UCrop.Options.EXTRA_STATUS_BAR_TEXT_IS_DARK, false);
+        UtilKt.changeBarsColor(this, mStatusBarIsDark, null, null, null);
+
         mToolbarColor = intent.getIntExtra(UCrop.Options.EXTRA_TOOL_BAR_COLOR, ContextCompat.getColor(this, R.color.ucrop_color_toolbar));
 
         mToolbarWidgetColor = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_WIDGET_COLOR_TOOLBAR, ContextCompat.getColor(this, R.color.ucrop_color_toolbar_widget));
@@ -520,5 +503,9 @@ public class UCropMultipleActivity extends AppCompatActivity implements UCropFra
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void immersive(@NotNull Activity activity, @NotNull View root, int statusBarHeight, int navBarHeight) {
     }
 }
