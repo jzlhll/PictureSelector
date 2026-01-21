@@ -24,7 +24,6 @@ import com.luck.picture.lib.loader.IBridgeMediaLoader;
 import com.luck.picture.lib.utils.DateUtils;
 import com.luck.picture.lib.utils.DensityUtil;
 import com.luck.picture.lib.widget.RecyclerPreloadView;
-import com.yalantis.ucrop.statusbar.ImmersiveManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -72,17 +72,22 @@ public class TitleSelectorBar extends TitleBar {
         selectAllImage.setImageResource(R.drawable.ps_select_all);
     }
 
-    public void setSelectedChange() {
+    public void setSelectedChange(int currentSelectCount) {
         if (mOnSelectAllListener == null) {
             return;
         }
+
         if (mIsAllSelected) {
-            mIsAllSelected = false;
+            if (currentSelectCount == 0) {
+                mIsAllSelected = false;
 //            selectAllImage.contentDescription = context.getString(R.string.select_all)
-            selectAllImage.setImageResource(R.drawable.ps_select_all);
+                selectAllImage.setImageResource(R.drawable.ps_select_all);
+            }
         } else {
-            mIsAllSelected = true;
-            selectAllImage.setImageResource(R.drawable.ps_select_cancel);
+            if (currentSelectCount > 0) {
+                mIsAllSelected = true;
+                selectAllImage.setImageResource(R.drawable.ps_select_cancel);
+            }
         }
     }
 }

@@ -15,10 +15,10 @@ repositories {
 
 dependencies {
   // PictureSelector basic (Necessary) 我修改了两个模块，按需使用
-  implementation 'io.github.jzlhll:pictureselector:3.16.4'
+  implementation 'io.github.jzlhll:pictureselector:3.16.5'
 
   // uCrop library (Not necessary)
-  implementation 'io.github.jzlhll:pictureselector_urop:3.16.4'
+  implementation 'io.github.jzlhll:pictureselector_urop:3.16.5'
     
   // image compress library (Not necessary)
   implementation 'com.github.buhuiming.PictureSelector:compress:3.15.1'
@@ -63,6 +63,11 @@ dependencies {
 
 
 ### 发布历史
+
+#### 3.16.5
+
+修正全选按钮的显示问题。
+
 
 #### 3.16.4
 

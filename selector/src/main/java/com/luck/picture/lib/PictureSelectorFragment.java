@@ -148,7 +148,7 @@ public class PictureSelectorFragment extends PictureCommonFragment
             throw new RuntimeException("Please select at least one picture");
         }
         bottomNarBar.setSelectedChange();
-        titleBar.setSelectedChange(); //allan added
+        titleBar.setSelectedChange(selectorConfig.getSelectCount()); //allan added
 
         // 刷新列表数据
         var isMulti = selectMediaList.size() > 1;
