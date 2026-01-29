@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,12 +66,15 @@ public class OnlyQueryDataActivity extends AppCompatActivity {
         GridAdapter adapter = new GridAdapter(mData);
         mRecycler.setAdapter(adapter);
         PictureSelector.create(this)
-                .dataSource(SelectMimeType.ofAll())
+                .dataSource(SelectMimeType.ofImage())
+                .setMaxSelectNum(Integer.MAX_VALUE)
+                .isPageStrategy(false)
                 .setQuerySortOrder(MediaStore.MediaColumns.DATE_MODIFIED + " DESC")
                 .obtainMediaData(new OnQueryDataSourceListener<LocalMedia>() {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onComplete(List<LocalMedia> result) {
+                        Log.d("allan", "onComplete: " + result.size());
                         mData.addAll(result);
                         adapter.notifyDataSetChanged();
                     }

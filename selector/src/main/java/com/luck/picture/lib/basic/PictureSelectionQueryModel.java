@@ -283,4 +283,9 @@ public class PictureSelectionQueryModel {
             }
         });
     }
+
+    public PictureSelectionQueryModel setMaxSelectNum(int maxSelectNum) {
+        selectionConfig.maxSelectNum = maxSelectNum;
+        return this;
+    }
 }

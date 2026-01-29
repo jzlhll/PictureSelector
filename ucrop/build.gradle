@@ -50,7 +50,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-    coordinates("io.github.jzlhll", "pictureselector_ucrop", "3.16.5")
+    coordinates("io.github.jzlhll", "pictureselector_ucrop", "3.16.6")
 
     pom {
         name = "pictureselector_ucrop"
